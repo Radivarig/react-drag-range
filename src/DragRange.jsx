@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactDOM = require('react-dom')
 
 var DragRange = React.createClass({
   getInitialState() {
@@ -20,6 +21,7 @@ var DragRange = React.createClass({
       initialX: 4,
       initialY: 4,
       decimals: 2,
+      cursor: 'all-scroll'
     }
   },
 
@@ -60,26 +62,56 @@ var DragRange = React.createClass({
     this.setState(s)
   },
 
+  startSetPercent(e) {
+    this.isSettingPercent = true
+    this.setPercent(e)
+  },
+
+  setPercent(e) {
+    if ( ! this.isSettingPercent)
+      return
+    const target = ReactDOM.findDOMNode(this.refs['range'])
+    const rect = target.getBoundingClientRect()
+    const percent = (e.clientX -rect.left)*100/rect.width
+    
+    this.setState({percent})
+  },
+
+  endSetPercent(e) {
+    this.isSettingPercent = false
+  },
+
   componentDidMount() {
     document.addEventListener('dragover', this.trackDelta)
+    document.addEventListener('dragover', this.setPercent)
+    document.addEventListener('mouseup', this.endSetPercent)
   },
 
   componentWillUnmount() {
     document.removeEventListener('dragover', this.trackDelta)
+    document.removeEventListener('dragover', this.setPercent)
+    document.removeEventListener('mouseup', this.endSetPercent)
   },
 
   render() {
     return (
+      <div>
+      percent: {this.state.percent} %
+
       <div
         draggable={true}
         onDragStart={this.setIsDragging(true)}
         onDragEnd={this.setIsDragging(false)}
         >
-        <span
-          draggable={false}
+          <span style={{cursor: this.props.cursor}}
+            onMouseDown={this.startSetPercent}
           >
-          isDragging: {JSON.stringify(this.state.isDragging)} ({this.state.valueX}, {this.state.valueY})
-        </span>
+            <span ref='range' draggable={false}>
+              isDragging: {JSON.stringify(this.state.isDragging)}
+              ({this.state.valueX}, {this.state.valueY})
+            </span>
+          </span>
+      </div>
       </div>
     )
   }
