@@ -1,0 +1,33 @@
+{
+  "name": "react-drag-range",
+  "version": "0.1.0",
+  "description": "React component wrapper for changing number range values by dragging",
+  "author": "Reslav Hollos",
+  "license": "MIT",
+  "main": "./exports.js",
+  "scripts": {
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.js --progress --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Radivarig/react-drag-range.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "react-component",
+    "drag",
+    "range"
+  ],
+  "dependencies": {
+    "jsx-loader": "^0.13.x"
+  },
+  "devDependencies": {
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.9.0"
+  },
+  "peerDependencies": {
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0"
+  }
+}
