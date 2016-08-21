@@ -27,6 +27,7 @@ var DragRange = React.createClass({
     changeY: React.PropTypes.func,
     dragStart: React.PropTypes.func,
     dragEnd: React.PropTypes.func,
+    disableUserSelectNone: React.PropTypes.bool, // allow text selection
   },
 
   getDefaultProps() {
@@ -43,6 +44,7 @@ var DragRange = React.createClass({
       changeY: () => {},
       dragStart: () => {},
       dragEnd: () => {},
+      disableUserSelectNone: false,
     }
   },
 
@@ -136,8 +138,16 @@ var DragRange = React.createClass({
   },
 
   render() {
+    const noSelectStyle = this.props.disableUserSelectNone ? {} : {
+      WebkitTouchCallout: 'none',// iOS Safari
+      WebkitUserSelect: 'none',  // Chrome/Safari/Opera
+      KhtmlUserSelect: 'none',   // Konqueror
+      MozUserSelect: 'none',     // Firefox
+      MsUserSelect: 'none',      // Internet Explorer/Edge
+      userSelect: 'none',        // Non-prefixed, currently not supported by any browser
+    }
     return (
-      <span ref='range' onMouseDown={this.handleMouseDown}>
+      <span style={noSelectStyle} ref='range' onMouseDown={this.handleMouseDown}>
         {this.props.children}
       </span>
     )
