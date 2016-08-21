@@ -91,8 +91,7 @@ const DragRange = React.createClass({
   setPercent(e) {
     if ( ! this.isSettingPercent)
       return
-    // todo target from props.id or ref
-    const target = ReactDOM.findDOMNode(this.refs['target'])
+    const target = ReactDOM.findDOMNode(this.props.target || this.refs['target'])
     const rect = target.getBoundingClientRect()
     let percent
     // todo based on axis
@@ -137,7 +136,6 @@ const DragRange = React.createClass({
     else {
       this.firstClick = true
       const timeout = this.props.doubleClickTimeout
-      console.log (this.props.percent, this.props.enablePercentReset)
       setTimeout(() => this.firstClick = false, timeout)
     }
   },
