@@ -9,8 +9,8 @@ var DragRange = React.createClass({
       startY: 0,
       initialX: this.props.initialX,
       initialY: this.props.initialY,
-      valueX: this.treat(0, 0, this.props.initialX),
-      valueY: this.treat(0, 0, this.props.initialY),
+      valueX: this.getValue(0, 0, this.props.initialX),
+      valueY: this.getValue(0, 0, this.props.initialY),
     }
   },
 
@@ -79,7 +79,7 @@ var DragRange = React.createClass({
     return value < min ? min : value > max ? max : value
   },
 
-  treat(client, start, initial, min, max) {
+  getValue(client, start, initial, min, max) {
     var delta = client -start
     var val = Math.floor(delta/this.props.unit)*this.props.rate +initial
     var clamped = this.clamp(min, max, val)
@@ -89,8 +89,8 @@ var DragRange = React.createClass({
   trackDelta(e) {
     if ( ! this.state.isDragging) return
     const s = this.state
-    var valueX = this.treat(e.clientX, s.startX, s.initialX, s.minX, s.maxX)
-    var valueY = this.treat(e.clientY, s.startY, s.initialY, s.minY, s.maxY)
+    var valueX = this.getValue(e.clientX, s.startX, s.initialX, s.minX, s.maxX)
+    var valueY = this.getValue(e.clientY, s.startY, s.initialY, s.minY, s.maxY)
     if (valueX != s.valueX) {this.props.changeX(valueX, e); this.setState({valueX})}
     if (valueY != s.valueY) {this.props.changeY(valueY, e); this.setState({valueY})}
   },
