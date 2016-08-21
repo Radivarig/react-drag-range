@@ -96,22 +96,24 @@ var DragRange = React.createClass({
   render() {
     return (
       <div>
-      percent: {this.state.percent} %
-
-      <div
-        draggable={true}
-        onDragStart={this.setIsDragging(true)}
-        onDragEnd={this.setIsDragging(false)}
+        percent: {this.state.percent} %
+        <br/>
+        isDragging: {JSON.stringify(this.state.isDragging)}
+        <br/>
+        ({this.state.valueX}, {this.state.valueY})
+        <div
+          draggable={true}
+          onDragStart={this.setIsDragging(true)}
+          onDragEnd={this.setIsDragging(false)}
         >
           <span style={{cursor: this.props.cursor}}
             onMouseDown={this.startSetPercent}
           >
             <span ref='range' draggable={false}>
-              isDragging: {JSON.stringify(this.state.isDragging)}
-              ({this.state.valueX}, {this.state.valueY})
+              {this.props.children}
             </span>
           </span>
-      </div>
+        </div>
       </div>
     )
   }

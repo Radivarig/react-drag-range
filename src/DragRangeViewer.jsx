@@ -5,7 +5,9 @@ var DragRangeViewer = React.createClass({
   render() {
     return (
       <div>
-        <DragRange />
+        <DragRange>
+          drag range
+        </DragRange>
       </div>
     )
   }
