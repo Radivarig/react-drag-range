@@ -1,7 +1,7 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
+const React = require('react')
+const ReactDOM = require('react-dom')
 
-var DragRange = React.createClass({
+const DragRange = React.createClass({
   getInitialState() {
     return {
       isDragging: false,
@@ -9,33 +9,28 @@ var DragRange = React.createClass({
       mouseStartY: 0,
       baseX: this.props.initialX,
       baseY: this.props.initialY,
-      valueX: this.getValue(0, 0, this.props.initialX),
-      valueY: this.getValue(0, 0, this.props.initialY),
     }
   },
 
   propTypes: {
-    unit: React.PropTypes.number, // unit in pixels
+    unit: React.PropTypes.number,       // unit in pixels
 
-    rate: React.PropTypes.number, // how much to change per unit
+    rate: React.PropTypes.number,       // how much to change per unit
     percentRate: React.PropTypes.number,
 
-    minX: React.PropTypes.number,
-    maxX: React.PropTypes.number,
+    percent: React.PropTypes.number, changePercent: React.PropTypes.func,
+    valueX: React.PropTypes.number,  changeValueX: React.PropTypes.func,
+    valueY: React.PropTypes.number,  changeValueY: React.PropTypes.func,
 
-    minY: React.PropTypes.number,
-    maxY: React.PropTypes.number,
+    minPercent: React.PropTypes.number, maxPercent: React.PropTypes.number,
+    minX: React.PropTypes.number,       maxX: React.PropTypes.number,
+    minY: React.PropTypes.number,       maxY: React.PropTypes.number,
 
     initialX: React.PropTypes.number,
     initialY: React.PropTypes.number,
 
     decimals: React.PropTypes.number,
     percentDecimals: React.PropTypes.number,
-
-    changePercent: React.PropTypes.func,
-
-    changeX: React.PropTypes.func,
-    changeY: React.PropTypes.func,
 
     dragStart: React.PropTypes.func,
     dragEnd: React.PropTypes.func,
@@ -46,20 +41,26 @@ var DragRange = React.createClass({
   getDefaultProps() {
     return {
       unit: 50,
+
       rate: 1,
       percentRate: 1,
-      valueX: 0,
-      valueY: 0,
+
+      percent: 0, changePercent: () => {},
+      valueX: 0,  changeValueX: () => {},
+      valueY: 0,  changeValueY: () => {},
+
+      minPercent: 0,
+      maxPercent: 100,
+
       initialX: 0,
       initialY: 0,
+
       decimals: 2,
       percentDecimals: 2,
-      percent: 0,
-      changePercent: () => {},
-      changeX: () => {},
-      changeY: () => {},
+
       dragStart: () => {},
       dragEnd: () => {},
+
       doubleClickTimeout: 500,
     }
   },
@@ -83,20 +84,22 @@ var DragRange = React.createClass({
   },
 
   getValue(client, start, base, min, max) {
-    var delta = client - start
-    var val = Math.floor(delta / this.props.unit) * this.props.rate + base
-    var clamped = this.clamp(min, max, val)
+    const delta = client - start
+    const val = Math.floor(delta / this.props.unit) * this.props.rate + base
+    const clamped = this.clamp(min, max, val)
     return Number(clamped.toFixed(this.props.decimals))
   },
 
   trackDelta(e) {
-    if ( ! this.state.isDragging) return
+    if ( ! this.state.isDragging)
+      return
+
     const s = this.state
     const p = this.props
-    var valueX = this.getValue(e.clientX, s.mouseStartX, s.baseX, p.minX, p.maxX)
-    var valueY = this.getValue(e.clientY, s.mouseStartY, s.baseY, p.minY, p.maxY)
-    if (valueX !== this.props.valueX) {this.props.changeX(valueX, e)}
-    if (valueY !== this.props.valueY) {this.props.changeY(valueY, e)}
+    const valueX = this.getValue(e.clientX, s.mouseStartX, s.baseX, p.minX, p.maxX)
+    const valueY = this.getValue(e.clientY, s.mouseStartY, s.baseY, p.minY, p.maxY)
+    if (valueX !== p.valueX) p.changeValueX(valueX, e)
+    if (valueY !== p.valueY) p.changeValueY(valueY, e)
   },
 
   startSetPercent(e) {
@@ -109,9 +112,9 @@ var DragRange = React.createClass({
       return
     const target = ReactDOM.findDOMNode(this.refs['range'])
     const rect = target.getBoundingClientRect()
-    let percent = (e.clientX -rect.left)*100/rect.width
-    percent = Math.floor(percent/this.props.percentRate)*this.props.percentRate
-    percent = this.clamp(0, 100, percent)
+    let percent = (e.clientX - rect.left) * 100 / rect.width
+    percent = Math.floor(percent / this.props.percentRate) * this.props.percentRate
+    percent = this.clamp(this.props.minPercent, this.props.maxPercent, percent)
     percent = Number(percent.toFixed(this.props.percentDecimals))
 
     if (percent !== this.props.percent)
@@ -131,9 +134,9 @@ var DragRange = React.createClass({
 
   handleDoubleClick(e) {
     if (this.firstClick) {
-      console.log ('double click', this.props, this.state)
-      if (this.props.valueX !== this.props.initialX) {this.props.changeX(this.props.initialX, e)}
-      if (this.props.valueY !== this.props.initialY) {this.props.changeY(this.props.initialY, e)}
+      const p = this.props
+      if (p.valueX !== p.initialX) p.changeValueX(p.initialX, e)
+      if (p.valueY !== p.initialY) p.changeValueY(p.initialY, e)
       this.setState(this.getInitialState())
     }
     else {
