@@ -26,6 +26,7 @@ const DragRange = React.createClass({
     minX: React.PropTypes.number,       maxX: React.PropTypes.number,
     minY: React.PropTypes.number,       maxY: React.PropTypes.number,
 
+    initialPercent: React.PropTypes.number,
     initialX: React.PropTypes.number,
     initialY: React.PropTypes.number,
 
@@ -52,6 +53,7 @@ const DragRange = React.createClass({
       minPercent: 0,
       maxPercent: 100,
 
+      initialPercent: 0,
       initialX: 0,
       initialY: 0,
 
@@ -136,6 +138,7 @@ const DragRange = React.createClass({
   handleDoubleClick(e) {
     if (this.firstClick) {
       const p = this.props
+      if (p.percent !== p.initialPercent) p.changePercent(p.initialPercent, e)
       if (p.valueX !== p.initialX) p.changeValueX(p.initialX, e)
       if (p.valueY !== p.initialY) p.changeValueY(p.initialY, e)
       this.setState(this.getInitialState())
