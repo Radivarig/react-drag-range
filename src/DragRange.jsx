@@ -93,6 +93,7 @@ const DragRange = React.createClass({
   trackDelta(e) {
     if ( ! this.state.isDragging)
       return
+    window.getSelection().removeAllRanges()
 
     const s = this.state
     const p = this.props
