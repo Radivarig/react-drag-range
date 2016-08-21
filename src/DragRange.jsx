@@ -151,6 +151,7 @@ var DragRange = React.createClass({
       MozUserSelect: 'none',     // Firefox
       MsUserSelect: 'none',      // Internet Explorer/Edge
       userSelect: 'none',        // Non-prefixed, currently not supported by any browser
+      display: 'block',
     }
     return (
       <span style={noSelectStyle} ref='range' onMouseDown={this.handleMouseDown}>
