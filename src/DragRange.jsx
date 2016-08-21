@@ -5,10 +5,10 @@ var DragRange = React.createClass({
   getInitialState() {
     return {
       isDragging: false,
-      startX: 0,
-      startY: 0,
-      initialX: this.props.initialX,
-      initialY: this.props.initialY,
+      mouseStartX: 0,
+      mouseStartY: 0,
+      baseX: this.props.initialX,
+      baseY: this.props.initialY,
       valueX: this.getValue(0, 0, this.props.initialX),
       valueY: this.getValue(0, 0, this.props.initialY),
     }
@@ -49,10 +49,13 @@ var DragRange = React.createClass({
       unit: 50,
       rate: 1,
       percentRate: 1,
+      valueX: 0,
+      valueY: 0,
       initialX: 0,
       initialY: 0,
       decimals: 2,
       percentDecimals: 2,
+      percent: 0,
       changePercent: () => {},
       changeX: () => {},
       changeY: () => {},
@@ -69,8 +72,10 @@ var DragRange = React.createClass({
     this.setState({
       isDragging: true,
       startIsDraggingOnMove: false,
-      startX: e.clientX,
-      startY: e.clientY,
+      mouseStartX: e.clientX,
+      mouseStartY: e.clientY,
+      baseX: this.props.valueX,
+      baseY: this.props.valueY,
     })
     this.props.dragStart(e)
   },
@@ -79,9 +84,9 @@ var DragRange = React.createClass({
     return value < min ? min : value > max ? max : value
   },
 
-  getValue(client, start, initial, min, max) {
-    var delta = client -start
-    var val = Math.floor(delta/this.props.unit)*this.props.rate +initial
+  getValue(client, start, base, min, max) {
+    var delta = client - start
+    var val = Math.floor(delta / this.props.unit) * this.props.rate + base
     var clamped = this.clamp(min, max, val)
     return Number(clamped.toFixed(this.props.decimals))
   },
@@ -89,10 +94,11 @@ var DragRange = React.createClass({
   trackDelta(e) {
     if ( ! this.state.isDragging) return
     const s = this.state
-    var valueX = this.getValue(e.clientX, s.startX, s.initialX, s.minX, s.maxX)
-    var valueY = this.getValue(e.clientY, s.startY, s.initialY, s.minY, s.maxY)
-    if (valueX != s.valueX) {this.props.changeX(valueX, e); this.setState({valueX})}
-    if (valueY != s.valueY) {this.props.changeY(valueY, e); this.setState({valueY})}
+    const p = this.props
+    var valueX = this.getValue(e.clientX, s.mouseStartX, s.baseX, p.minX, p.maxX)
+    var valueY = this.getValue(e.clientY, s.mouseStartY, s.baseY, p.minY, p.maxY)
+    if (valueX !== this.props.valueX) {this.props.changeX(valueX, e)}
+    if (valueY !== this.props.valueY) {this.props.changeY(valueY, e)}
   },
 
   startSetPercent(e) {
@@ -110,10 +116,8 @@ var DragRange = React.createClass({
     percent = this.clamp(0, 100, percent)
     percent = Number(percent.toFixed(this.props.percentDecimals))
 
-    if (this.state.percent !== percent) {
-      this.setState({percent})
+    if (percent !== this.props.percent)
       this.props.changePercent(percent, e)
-    }
   },
 
   endSetPercent(e) {
@@ -128,16 +132,15 @@ var DragRange = React.createClass({
   },
 
   handleDoubleClick(e) {
-   if (this.firstClick) {
-    // double click
-    const initialState = this.getInitialState()
-    if (this.state.valueX != initialState.valueX) this.props.changeX(initialState.valueX, e)
-    if (this.state.valueY != initialState.valueY) this.props.changeY(initialState.valueY, e)
-    this.setState(initialState)
-   }
+    if (this.firstClick) {
+      console.log ('double click', this.props, this.state)
+      if (this.props.valueX !== this.props.initialX) {this.props.changeX(this.props.initialX, e)}
+      if (this.props.valueY !== this.props.initialY) {this.props.changeY(this.props.initialY, e)}
+      this.setState(this.getInitialState())
+    }
     else {
       this.firstClick = true
-      setTimeout(()=>this.firstClick = false, this.props.doubleClickTimeout)
+      setTimeout(() => this.firstClick = false, this.props.doubleClickTimeout)
     }
   },
 
@@ -158,9 +161,7 @@ var DragRange = React.createClass({
     if ( ! this.state.isDragging)
       return
     this.setState({
-      isDragging: false,
-      initialX: this.state.valueX,
-      initialY: this.state.valueY,
+      isDragging: false
     })
     this.props.dragEnd(e)
   },
