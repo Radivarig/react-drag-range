@@ -52,23 +52,16 @@ var DragRange = React.createClass({
     }
   },
 
-  setIsDragging(val) {
-    return (evt) => {
-      var s = {isDragging: val}
-      if (val) {
-        s.startX = evt.clientX
-        s.startY = evt.clientY
-      }
-      else {
-        s.initialX = this.state.valueX
-        s.initialY = this.state.valueY
-      }
-      if (val && ! this.state.isDragging)
-        this.props.dragStart(evt)
-      else if (! val && this.state.isDragging)
-        this.props.dragEnd(evt)
-      this.setState(s)
-    }
+  startIsDragging(e) {
+    if (this.state.isDragging)
+      return
+    this.setState({
+      isDragging: true,
+      startIsDraggingOnMove: false,
+      startX: e.clientX,
+      startY: e.clientY,
+    })
+    this.props.dragStart(e)
   },
 
   clamp(min, max, value) {
@@ -84,15 +77,11 @@ var DragRange = React.createClass({
 
   trackDelta(e) {
     if ( ! this.state.isDragging) return
-    var s = {}
     var valueX = this.treat(e.clientX, this.state.startX, this.state.initialX)
     var valueY = this.treat(e.clientY, this.state.startY, this.state.initialY)
-    if (valueX != this.state.valueX) s.valueX = valueX
-    if (valueY != this.state.valueY) s.valueY = valueY
 
-    if (valueX != this.state.valueX) this.props.changeX(valueX, e)
-    if (valueY != this.state.valueY) this.props.changeY(valueY, e)
-    this.setState(s)
+    if (valueX != this.state.valueX) {this.props.changeX(valueX, e); this.setState({valueX: valueX})}
+    if (valueY != this.state.valueY) {this.props.changeY(valueY, e); this.setState({valueY: valueY})}
   },
 
   startSetPercent(e) {
@@ -122,7 +111,8 @@ var DragRange = React.createClass({
 
   handleMouseDown(e) {
     this.startSetPercent(e)
-    this.setIsDragging(true)(e)
+    if ( ! this.state.isDragging)
+      this.setState({startIsDraggingOnMove: true})
     this.handleDoubleClick(e)
   },
 
@@ -141,13 +131,27 @@ var DragRange = React.createClass({
   },
 
   handleMouseMove(e) {
-    this.trackDelta(e)
     this.setPercent(e)
+    if (this.state.startIsDraggingOnMove)
+      this.startIsDragging(e)
+    this.trackDelta(e)
   },
 
   handleMouseUp(e) {
-    this.endSetPercent()
-    this.setIsDragging(false)(e)
+    this.endSetPercent(e)
+    this.setState({startIsDraggingOnMove: false})
+    this.endIsDragging(e)
+  },
+
+  endIsDragging(e) {
+    if ( ! this.state.isDragging)
+      return
+    this.setState({
+      isDragging: false,
+      initialX: this.state.valueX,
+      initialY: this.state.valueY,
+    })
+    this.props.dragEnd(e)
   },
 
   componentDidMount() {
