@@ -27,17 +27,12 @@ var DragRange = React.createClass({
 
   setIsDragging(val) {
     return function(evt) {
-      if (val) {
-        evt.dataTransfer.setData('text/plain', '')
-      }
       var s = {isDragging: val}
       if (val) {
         s.startX = evt.clientX
         s.startY = evt.clientY
       }
       this.setState(s)
-      evt.dataTransfer.setDragImage(document.createElement('div'), 0, 0)
-
     }.bind(this)
   },
 
@@ -81,16 +76,24 @@ var DragRange = React.createClass({
     this.isSettingPercent = false
   },
 
+  handleMouseMove(e) {
+    this.trackDelta(e)
+    this.setPercent(e)
+  },
+
+  handleMouseUp(e) {
+    this.endSetPercent()
+    this.setIsDragging(false)(e)
+  },
+
   componentDidMount() {
-    document.addEventListener('dragover', this.trackDelta)
-    document.addEventListener('dragover', this.setPercent)
-    document.addEventListener('mouseup', this.endSetPercent)
+    document.addEventListener('mousemove', this.handleMouseMove)
+    document.addEventListener('mouseup', this.handleMouseUp)
   },
 
   componentWillUnmount() {
-    document.removeEventListener('dragover', this.trackDelta)
-    document.removeEventListener('dragover', this.setPercent)
-    document.removeEventListener('mouseup', this.endSetPercent)
+    document.removeEventListener('mousemove', this.handleMouseMove)
+    document.removeEventListener('mouseup', this.handleMouseUp)
   },
 
   render() {
@@ -101,15 +104,11 @@ var DragRange = React.createClass({
         isDragging: {JSON.stringify(this.state.isDragging)}
         <br/>
         ({this.state.valueX}, {this.state.valueY})
-        <div
-          draggable={true}
-          onDragStart={this.setIsDragging(true)}
-          onDragEnd={this.setIsDragging(false)}
-        >
+        <div onMouseDown={this.setIsDragging(true)}>
           <span style={{cursor: this.props.cursor}}
             onMouseDown={this.startSetPercent}
           >
-            <span ref='range' draggable={false}>
+            <span ref='range'>
               {this.props.children}
             </span>
           </span>
