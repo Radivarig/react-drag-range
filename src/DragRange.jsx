@@ -16,19 +16,30 @@ var DragRange = React.createClass({
 
   propTypes: {
     unit: React.PropTypes.number, // unit in pixels
+
     rate: React.PropTypes.number, // how much to change per unit
     percentRate: React.PropTypes.number,
-    min: React.PropTypes.number,
-    max: React.PropTypes.number,
+
+    minX: React.PropTypes.number,
+    maxX: React.PropTypes.number,
+
+    minY: React.PropTypes.number,
+    maxY: React.PropTypes.number,
+
     initialX: React.PropTypes.number,
     initialY: React.PropTypes.number,
+
     decimals: React.PropTypes.number,
     percentDecimals: React.PropTypes.number,
+
     changePercent: React.PropTypes.func,
+
     changeX: React.PropTypes.func,
     changeY: React.PropTypes.func,
+
     dragStart: React.PropTypes.func,
     dragEnd: React.PropTypes.func,
+
     disableUserSelectNone: React.PropTypes.bool, // allow text selection
     doubleClickTimeout: React.PropTypes.number,
   },
@@ -68,20 +79,20 @@ var DragRange = React.createClass({
     return value < min ? min : value > max ? max : value
   },
 
-  treat(client, start, initial) {
+  treat(client, start, initial, min, max) {
     var delta = client -start
     var val = Math.floor(delta/this.props.unit)*this.props.rate +initial
-    var clamped = this.clamp(this.props.min, this.props.max, val)
+    var clamped = this.clamp(min, max, val)
     return Number(clamped.toFixed(this.props.decimals))
   },
 
   trackDelta(e) {
     if ( ! this.state.isDragging) return
-    var valueX = this.treat(e.clientX, this.state.startX, this.state.initialX)
-    var valueY = this.treat(e.clientY, this.state.startY, this.state.initialY)
-
-    if (valueX != this.state.valueX) {this.props.changeX(valueX, e); this.setState({valueX: valueX})}
-    if (valueY != this.state.valueY) {this.props.changeY(valueY, e); this.setState({valueY: valueY})}
+    const s = this.state
+    var valueX = this.treat(e.clientX, s.startX, s.initialX, s.minX, s.maxX)
+    var valueY = this.treat(e.clientY, s.startY, s.initialY, s.minY, s.maxY)
+    if (valueX != s.valueX) {this.props.changeX(valueX, e); this.setState({valueX})}
+    if (valueY != s.valueY) {this.props.changeY(valueY, e); this.setState({valueY})}
   },
 
   startSetPercent(e) {
