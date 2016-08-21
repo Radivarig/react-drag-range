@@ -1,20 +1,18 @@
-# react-popups
+# react-drag-range
 
-Try it - [Live Example](https://radivarig.github.io/#/react-popups)
+Try it - [Live Example](https://radivarig.github.io/#/react-drag-range)
 
-![](http://i.imgur.com/VuwWFn2.gif)
+![]()
 
 ### Install
 
-`npm install react-popups` (peer dependencies: `react react-dom`)
-
-for React **v0.13.3** `npm install react-popups@1.1.1`
+`npm install react-drag-range` (peer dependencies: `react react-dom`)
 
 ### Demo
 
-Check out [Live Example](https://radivarig.github.io/#/react-popups) and the [example code](https://github.com/Radivarig/react-popups/blob/master/src/PopupsViewer.jsx), or run locally
+Check out [Live Example](https://radivarig.github.io/#/react-drag-range) and the [example code](https://github.com/Radivarig/react-drag-range/blob/master/src/ReactDragViewer.jsx), or run locally
 ```bash
-git clone git@github.com:Radivarig/react-popups.git
+git clone git@github.com:Radivarig/react-drag-range.git
 npm install
 npm run dev 
 ```
@@ -22,49 +20,17 @@ navigate to `localhost:8080`
 
 ### Features
 
-- create custom popup components on custom event
-- pass data to them
-- detect screen quadrant (safe to click near edges)
-- close all front popups on click
+-
 
 ### Basic Usage
 
 ```javascript
 // ...
-var Popups = require('react-popups')
+var DragRange = require('react-drag-range')
 
-var PopupHandler = React.createClass({
-  render: function() {
-    console.log('received: ', this.props.data) // received: clicked element identifier
-    var Popup = <DefaultPopup/>
-    switch(this.props.data) {
-      case 'clicked element identifier': Popup = <SomePopup/>; break
-      // ...
-      // var something = this.props.popupProps.something
-    }
-  }
-  return ({Popup})
-})
+...
 
-var App = React.createClass({
-  render: function() {
-    var linkIfNoMatch = '/your-url' // for no action use 'javaScript:void(0)'
-    return (
-      <div>
-        <Popups handler={PopupHandler}
-                clickButtons={[0]}        // if defined adds 'click' event; 0 left, 1 middle, 2 right
-                dataName='data-yourdata'  // defaults to 'data'
-                />
-                //event='someOtherEvent'
-                //popupProps={something: ..}  // will be passed to PopupHandler
-
-        Some <a data-yourdata={'clicked element identifier'} href={linkIfNoMatch}>demo</a> text.
-      </div>
-    )
-  }
-})
-
-require('react-dom').render(<App/>, document.body)
+require('react-dom').render(<DragRangeViewer/>, document.body)
 ```
 
 ### License
