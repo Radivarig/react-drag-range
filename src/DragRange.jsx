@@ -21,19 +21,18 @@ var DragRange = React.createClass({
       initialX: 4,
       initialY: 4,
       decimals: 2,
-      cursor: 'all-scroll'
     }
   },
 
   setIsDragging(val) {
-    return function(evt) {
+    return (evt) => {
       var s = {isDragging: val}
       if (val) {
         s.startX = evt.clientX
         s.startY = evt.clientY
       }
       this.setState(s)
-    }.bind(this)
+    }
   },
 
   clamp(min, max, value) {
@@ -76,6 +75,11 @@ var DragRange = React.createClass({
     this.isSettingPercent = false
   },
 
+  handleMouseDown(e) {
+    this.startSetPercent(e)
+    this.setIsDragging(true)(e)
+  },
+
   handleMouseMove(e) {
     this.trackDelta(e)
     this.setPercent(e)
@@ -98,22 +102,9 @@ var DragRange = React.createClass({
 
   render() {
     return (
-      <div>
-        percent: {this.state.percent} %
-        <br/>
-        isDragging: {JSON.stringify(this.state.isDragging)}
-        <br/>
-        ({this.state.valueX}, {this.state.valueY})
-        <div onMouseDown={this.setIsDragging(true)}>
-          <span style={{cursor: this.props.cursor}}
-            onMouseDown={this.startSetPercent}
-          >
-            <span ref='range'>
-              {this.props.children}
-            </span>
-          </span>
-        </div>
-      </div>
+      <span ref='range' onMouseDown={this.handleMouseDown}>
+        {this.props.children}
+      </span>
     )
   }
 })

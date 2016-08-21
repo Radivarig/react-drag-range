@@ -3,10 +3,16 @@ var DragRange = require('./DragRange.jsx')
 
 var DragRangeViewer = React.createClass({
   render() {
+    const rangeContentStyle = {
+      cursor: 'ew-resize',
+    }
+
     return (
       <div>
         <DragRange>
-          drag range
+          <span style={rangeContentStyle}>
+            drag range
+          </span>
         </DragRange>
       </div>
     )
