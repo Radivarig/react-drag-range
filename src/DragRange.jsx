@@ -15,11 +15,13 @@ var DragRange = React.createClass({
   propTypes: {
     unit: React.PropTypes.number, // unit in pixels
     rate: React.PropTypes.number, // how much to change per unit
+    percentRate: React.PropTypes.number,
     min: React.PropTypes.number,
     max: React.PropTypes.number,
     initialX: React.PropTypes.number,
     initialY: React.PropTypes.number,
     decimals: React.PropTypes.number,
+    percentDecimals: React.PropTypes.number,
     changePercent: React.PropTypes.func,
     changeX: React.PropTypes.func,
     changeY: React.PropTypes.func,
@@ -31,9 +33,11 @@ var DragRange = React.createClass({
     return {
       unit: 50,
       rate: 1,
+      percentRate: 1,
       initialX: 0,
       initialY: 0,
       decimals: 2,
+      percentDecimals: 2,
       changePercent: () => {},
       changeX: () => {},
       changeY: () => {},
@@ -91,8 +95,11 @@ var DragRange = React.createClass({
       return
     const target = ReactDOM.findDOMNode(this.refs['range'])
     const rect = target.getBoundingClientRect()
-    const percent = (e.clientX -rect.left)*100/rect.width
-    
+    let percent = (e.clientX -rect.left)*100/rect.width
+    percent = Math.floor(percent/this.props.percentRate)*this.props.percentRate
+    percent = this.clamp(0, 100, percent)
+    percent = percent.toFixed(this.props.percentDecimals)
+
     if (this.state.percent !== percent) {
       this.setState({percent})
       this.props.changePercent(percent, e)
