@@ -24,6 +24,7 @@ const DragRange = React.createClass({
     dragEnd: React.PropTypes.func,
     doubleClickTimeout: React.PropTypes.number,
     disablePercentClamp: React.PropTypes.bool,
+    enablePercentReset: React.PropTypes.bool,
   },
 
   getDefaultProps() {
@@ -126,22 +127,28 @@ const DragRange = React.createClass({
 
   handleDoubleClick(e) {
     if (this.firstClick) {
-      this.handleOnChange(undefined, e)
-      this.setState(this.getInitialState())
+      // reset
+      if ( ! this.props.percent || this.props.enablePercentReset) {
+        this.handleOnChange(undefined, e)
+        this.setState(this.getInitialState())
+      }
       e.preventDefault() // prevent text selection
     }
     else {
       this.firstClick = true
-      setTimeout(() => this.firstClick = false, this.props.doubleClickTimeout)
+      const timeout = this.props.doubleClickTimeout
+      console.log (this.props.percent, this.props.enablePercentReset)
+      setTimeout(() => this.firstClick = false, timeout)
     }
   },
 
   handleMouseMove(e) {
+    if (this.state.startIsDraggingOnMove)
+      this.startIsDragging(e)
     if (this.props.percent)
       this.setPercent(e)
     else this.trackDelta(e)
-    if (this.state.startIsDraggingOnMove)
-      this.startIsDragging(e)
+    window.getSelection().removeAllRanges()
   },
 
   handleMouseUp(e) {
@@ -153,9 +160,7 @@ const DragRange = React.createClass({
   endIsDragging(e) {
     if ( ! this.state.isDragging)
       return
-    this.setState({
-      isDragging: false
-    })
+    this.setState({isDragging: false})
     this.props.dragEnd(e)
   },
 
