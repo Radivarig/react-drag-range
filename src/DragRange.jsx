@@ -30,6 +30,7 @@ var DragRange = React.createClass({
     dragStart: React.PropTypes.func,
     dragEnd: React.PropTypes.func,
     disableUserSelectNone: React.PropTypes.bool, // allow text selection
+    doubleClickTimeout: React.PropTypes.number,
   },
 
   getDefaultProps() {
@@ -47,6 +48,7 @@ var DragRange = React.createClass({
       dragStart: () => {},
       dragEnd: () => {},
       disableUserSelectNone: false,
+      doubleClickTimeout: 500,
     }
   },
 
@@ -121,6 +123,21 @@ var DragRange = React.createClass({
   handleMouseDown(e) {
     this.startSetPercent(e)
     this.setIsDragging(true)(e)
+    this.handleDoubleClick(e)
+  },
+
+  handleDoubleClick(e) {
+   if (this.firstClick) {
+    // double click
+    const initialState = this.getInitialState()
+    if (this.state.valueX != initialState.valueX) this.props.changeX(initialState.valueX, e)
+    if (this.state.valueY != initialState.valueY) this.props.changeY(initialState.valueY, e)
+    this.setState(initialState)
+   }
+    else {
+      this.firstClick = true
+      setTimeout(()=>this.firstClick = false, this.props.doubleClickTimeout)
+    }
   },
 
   handleMouseMove(e) {
