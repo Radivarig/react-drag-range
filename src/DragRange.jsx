@@ -23,6 +23,7 @@ const DragRange = React.createClass({
     dragStart: React.PropTypes.func,
     dragEnd: React.PropTypes.func,
     doubleClickTimeout: React.PropTypes.number,
+    disablePercentClamp: React.PropTypes.bool,
   },
 
   getDefaultProps() {
@@ -98,6 +99,8 @@ const DragRange = React.createClass({
     else percent = (e.clientX - rect.left) * 100 / rect.width
     percent = Math.floor(percent / this.props.rate) * this.props.rate
     percent = this.clamp(this.props.min, this.props.max, percent)
+    if ( ! this.props.disablePercentClamp)
+      percent = this.clamp(0, 100, percent)
     percent = Number(percent.toFixed(this.props.decimals))
 
     this.handleOnChange(percent, e)
