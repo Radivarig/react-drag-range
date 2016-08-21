@@ -142,6 +142,7 @@ const DragRange = React.createClass({
       if (p.valueX !== p.initialX) p.changeValueX(p.initialX, e)
       if (p.valueY !== p.initialY) p.changeValueY(p.initialY, e)
       this.setState(this.getInitialState())
+      e.preventDefault()
     }
     else {
       this.firstClick = true
