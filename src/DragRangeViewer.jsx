@@ -9,7 +9,9 @@ var DragRangeViewer = React.createClass({
 
     return (
       <div>
-        <DragRange>
+        <DragRange
+          percentCallback={this.handlePercent}
+        >
           <span style={rangeContentStyle}>
             drag range
           </span>

@@ -12,6 +12,10 @@ var DragRange = React.createClass({
     }
   },
 
+  propTypes: {
+    percentCallback: React.PropTypes.func,
+  },
+
   getDefaultProps() {
     return {
       pixels: 50,
@@ -21,6 +25,7 @@ var DragRange = React.createClass({
       initialX: 4,
       initialY: 4,
       decimals: 2,
+      percentCallback: () => {},
     }
   },
 
@@ -68,7 +73,7 @@ var DragRange = React.createClass({
     const rect = target.getBoundingClientRect()
     const percent = (e.clientX -rect.left)*100/rect.width
     
-    this.setState({percent})
+    this.props.percentCallback(percent)
   },
 
   endSetPercent(e) {
