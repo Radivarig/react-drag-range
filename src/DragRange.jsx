@@ -13,19 +13,32 @@ var DragRange = React.createClass({
   },
 
   propTypes: {
-    percentCallback: React.PropTypes.func,
+    unit: React.PropTypes.number, // unit in pixels
+    rate: React.PropTypes.number, // how much to change per unit
+    min: React.PropTypes.number,
+    max: React.PropTypes.number,
+    initialX: React.PropTypes.number,
+    initialY: React.PropTypes.number,
+    decimals: React.PropTypes.number,
+    changePercent: React.PropTypes.func,
+    changeX: React.PropTypes.func,
+    changeY: React.PropTypes.func,
+    dragStart: React.PropTypes.func,
+    dragEnd: React.PropTypes.func,
   },
 
   getDefaultProps() {
     return {
-      pixels: 50,
-      rate: 1.1,
-      min: 3,
-      max: 6,
-      initialX: 4,
-      initialY: 4,
+      unit: 50,
+      rate: 1,
+      initialX: 0,
+      initialY: 0,
       decimals: 2,
-      percentCallback: () => {},
+      changePercent: () => {},
+      changeX: () => {},
+      changeY: () => {},
+      dragStart: () => {},
+      dragEnd: () => {},
     }
   },
 
@@ -36,6 +49,10 @@ var DragRange = React.createClass({
         s.startX = evt.clientX
         s.startY = evt.clientY
       }
+      if (val && ! this.state.isDragging)
+        this.props.dragStart(evt)
+      else if (! val && this.state.isDragging)
+        this.props.dragEnd(evt)
       this.setState(s)
     }
   },
@@ -46,18 +63,21 @@ var DragRange = React.createClass({
 
   treat(client, start, initial) {
     var delta = client -start
-    var val = Math.floor(delta/this.props.pixels)*this.props.rate +initial
+    var val = Math.floor(delta/this.props.unit)*this.props.rate +initial
     var clamped = this.clamp(this.props.min, this.props.max, val)
     return clamped.toFixed(this.props.decimals)
   },
 
-  trackDelta(evt) {
+  trackDelta(e) {
     if ( ! this.state.isDragging) return
     var s = {}
-    var valueX = this.treat(evt.clientX, this.state.startX, this.props.initialX)
-    var valueY = this.treat(evt.clientY, this.state.startY, this.props.initialY)
+    var valueX = this.treat(e.clientX, this.state.startX, this.props.initialX)
+    var valueY = this.treat(e.clientY, this.state.startY, this.props.initialY)
     if (valueX != this.state.valueX) s.valueX = valueX
     if (valueY != this.state.valueY) s.valueY = valueY
+
+    if (valueX != this.state.valueX) this.props.changeX(valueX, e)
+    if (valueY != this.state.valueY) this.props.changeY(valueY, e)
     this.setState(s)
   },
 
@@ -73,7 +93,10 @@ var DragRange = React.createClass({
     const rect = target.getBoundingClientRect()
     const percent = (e.clientX -rect.left)*100/rect.width
     
-    this.props.percentCallback(percent)
+    if (this.state.percent !== percent) {
+      this.setState({percent})
+      this.props.changePercent(percent, e)
+    }
   },
 
   endSetPercent(e) {
