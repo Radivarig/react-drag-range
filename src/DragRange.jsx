@@ -7,6 +7,8 @@ var DragRange = React.createClass({
       isDragging: false,
       startX: 0,
       startY: 0,
+      initialX: this.props.initialX,
+      initialY: this.props.initialY,
       valueX: this.treat(0, 0, this.props.initialX),
       valueY: this.treat(0, 0, this.props.initialY),
     }
@@ -55,6 +57,10 @@ var DragRange = React.createClass({
         s.startX = evt.clientX
         s.startY = evt.clientY
       }
+      else {
+        s.initialX = this.state.valueX
+        s.initialY = this.state.valueY
+      }
       if (val && ! this.state.isDragging)
         this.props.dragStart(evt)
       else if (! val && this.state.isDragging)
@@ -71,14 +77,14 @@ var DragRange = React.createClass({
     var delta = client -start
     var val = Math.floor(delta/this.props.unit)*this.props.rate +initial
     var clamped = this.clamp(this.props.min, this.props.max, val)
-    return clamped.toFixed(this.props.decimals)
+    return Number(clamped.toFixed(this.props.decimals))
   },
 
   trackDelta(e) {
     if ( ! this.state.isDragging) return
     var s = {}
-    var valueX = this.treat(e.clientX, this.state.startX, this.props.initialX)
-    var valueY = this.treat(e.clientY, this.state.startY, this.props.initialY)
+    var valueX = this.treat(e.clientX, this.state.startX, this.state.initialX)
+    var valueY = this.treat(e.clientY, this.state.startY, this.state.initialY)
     if (valueX != this.state.valueX) s.valueX = valueX
     if (valueY != this.state.valueY) s.valueY = valueY
 
@@ -100,7 +106,7 @@ var DragRange = React.createClass({
     let percent = (e.clientX -rect.left)*100/rect.width
     percent = Math.floor(percent/this.props.percentRate)*this.props.percentRate
     percent = this.clamp(0, 100, percent)
-    percent = percent.toFixed(this.props.percentDecimals)
+    percent = Number(percent.toFixed(this.props.percentDecimals))
 
     if (this.state.percent !== percent) {
       this.setState({percent})
