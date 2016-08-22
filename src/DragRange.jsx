@@ -31,7 +31,7 @@ const DragRange = React.createClass({
     return {
       yAxis: false,
       percent: false,
-      unit: 50,
+      unit: 20,
       rate: 1,
       value: 0,
       onChange: () => {},
