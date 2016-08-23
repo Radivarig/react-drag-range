@@ -22,6 +22,7 @@ const DragRange = React.createClass({
     decimals: React.PropTypes.number,
     dragStart: React.PropTypes.func,
     dragEnd: React.PropTypes.func,
+    onDoubleClick: React.PropTypes.func,
     doubleClickTimeout: React.PropTypes.number,
     disablePercentClamp: React.PropTypes.bool,
     disableReset: React.PropTypes.bool,
@@ -39,6 +40,7 @@ const DragRange = React.createClass({
       decimals: 2,
       dragStart: () => {},
       dragEnd: () => {},
+      onDoubleClick: () => {},
       doubleClickTimeout: 500, // 0 for percent
     }
   },
@@ -145,6 +147,7 @@ const DragRange = React.createClass({
         }
       }
       e.preventDefault() // prevent text selection
+      p.onDoubleClick(e)
     }
     else {
       this.firstClick = true
