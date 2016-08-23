@@ -127,16 +127,15 @@ const DragRange = React.createClass({
   },
 
   handleOnChange(newValue, e) {
-    const p = this.props
-    newValue = newValue !== undefined ? newValue : p.default
-    if (p.value !== newValue) p.onChange(newValue, e)
+    if (this.props.value !== newValue)
+      this.props.onChange(newValue, e)
   },
 
   handleDoubleClick(e) {
     if (this.firstClick) {
       // reset
       if ( ! this.props.percent || this.props.enablePercentReset) {
-        this.handleOnChange(undefined, e)
+        this.handleOnChange(this.props.default, e)
         this.setState(this.getInitialState())
       }
       e.preventDefault() // prevent text selection
