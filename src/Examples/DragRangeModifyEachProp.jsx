@@ -22,7 +22,7 @@ const DragRangeModifyEachProp = React.createClass({
       min: undefined,
       max: undefined,
 
-      initial: 0,
+      default: 0,
       decimals: 2,
       doubleClickTimeout: 500,
 
@@ -73,7 +73,7 @@ const DragRangeModifyEachProp = React.createClass({
         {name: 'min', title: 'Minimum clamp value'},
         {name: 'max', title: 'Maximum clamp value'},
       ],
-      {name: 'initial', title: 'Reset progress value to this on double click', passProps: {rate: 0.01}},
+      {name: 'defaulft', title: 'Reset value to this on double click', passProps: {rate: 0.01}},
       {name: 'decimals', title: 'Decimal places for rounding values', passProps: {min: 0}},
       {name: 'doubleClickTimeout', title: 'Miliseconds for doubleClick reset, 0 to skip'},
     ]

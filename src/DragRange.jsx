@@ -5,7 +5,7 @@ const DragRange = React.createClass({
   getInitialState() {
     return {
       mouseStart: {x: 0, y: 0},
-      base: this.props.initial,
+      base: this.props.default,
     }
   },
 
@@ -18,7 +18,7 @@ const DragRange = React.createClass({
     onChange: React.PropTypes.func,
     min: React.PropTypes.number,
     max: React.PropTypes.number,
-    initial: React.PropTypes.number,
+    default: React.PropTypes.number,
     decimals: React.PropTypes.number,
     dragStart: React.PropTypes.func,
     dragEnd: React.PropTypes.func,
@@ -36,7 +36,7 @@ const DragRange = React.createClass({
       value: 0,
       onChange: () => {},
       // min: 0, max: 100, // for percent
-      initial: 0,
+      default: 0,
       decimals: 2,
       dragStart: () => {},
       dragEnd: () => {},
@@ -128,7 +128,7 @@ const DragRange = React.createClass({
 
   handleOnChange(newValue, e) {
     const p = this.props
-    newValue = newValue !== undefined ? newValue : p.initial
+    newValue = newValue !== undefined ? newValue : p.default
     if (p.value !== newValue) p.onChange(newValue, e)
   },
 
