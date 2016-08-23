@@ -10,8 +10,8 @@ const DragRangeModifyEachProp = React.createClass({
   getInitialState() {
     return {
       unit: 20,
-
       rate: 1,
+      strict: true,
 
       percentWidth: 0,
       percentHeight: 0,
@@ -22,7 +22,6 @@ const DragRangeModifyEachProp = React.createClass({
       min: undefined,
       max: undefined,
 
-      default: 0,
       decimals: 2,
       doubleClickTimeout: 500,
 
@@ -30,7 +29,7 @@ const DragRangeModifyEachProp = React.createClass({
   },
 
   onChange (name, e) {
-    const value = e.target ? e.target.value : e
+    const value = e && e.target ? e.target.value : e
     let s = {}
     s[name] = value
     this.setState(s)
@@ -58,7 +57,7 @@ const DragRangeModifyEachProp = React.createClass({
     )
   },
 
-  render() {    
+  render() {
     const rowStyle = {
       backgroundColor: '#ddd',
       textAlign: 'center',
@@ -73,9 +72,9 @@ const DragRangeModifyEachProp = React.createClass({
         {name: 'min', title: 'Minimum clamp value'},
         {name: 'max', title: 'Maximum clamp value'},
       ],
-      {name: 'defaulft', title: 'Reset value to this on double click', passProps: {rate: 0.01}},
+      {name: 'default', title: 'Reset value to this on double click', passProps: {rate: 0.01}},
       {name: 'decimals', title: 'Decimal places for rounding values', passProps: {min: 0}},
-      {name: 'doubleClickTimeout', title: 'Miliseconds for doubleClick reset, 0 to skip'},
+      {name: 'doubleClickTimeout', title: 'Miliseconds for doubleClick detection'}
     ]
 
     const gridMargin = {margin: 20}
