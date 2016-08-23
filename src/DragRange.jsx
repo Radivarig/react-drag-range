@@ -69,10 +69,10 @@ const DragRange = React.createClass({
     const delta = client - start
     const deltaInteger = Math.floor(delta / p.unit)
 
-    const val = (deltaInteger * p.rate) + unclampedBase
-    const clampedVal = this.clamp(p.min, p.max, val)
+    const value = (deltaInteger * p.rate) + unclampedBase
+    const clampedValue = this.clamp(p.min, p.max, value)
 
-    return Number(clampedVal.toFixed(p.decimals))
+    return Number(clampedValue.toFixed(p.decimals))
   },
 
   trackDelta(e) {
