@@ -60,13 +60,19 @@ const DragRange = React.createClass({
     return value < min ? min : value > max ? max : value
   },
 
-  getValue(client, start, base, min, max) {
+  getValue(client, start) {
+    const p = this.props
+
+    const base = this.state.base
+    const unclampedBase = Math.ceil(base / p.rate) * p.rate
+
     const delta = client - start
-    const deltaInteger = Math.floor(delta / this.props.unit)
-    const unclampedBase = Math.ceil(base / this.props.rate) * this.props.rate
-    const val = (deltaInteger * this.props.rate) + unclampedBase
-    const clamped = this.clamp(min, max, val)
-    return Number(clamped.toFixed(this.props.decimals))
+    const deltaInteger = Math.floor(delta / p.unit)
+
+    const val = (deltaInteger * p.rate) + unclampedBase
+    const clampedVal = this.clamp(p.min, p.max, val)
+
+    return Number(clampedVal.toFixed(p.decimals))
   },
 
   trackDelta(e) {
@@ -79,8 +85,8 @@ const DragRange = React.createClass({
 
     let value
     if (p.yAxis)
-         value = this.getValue(e.clientY, s.mouseStart.y, s.base, p.min, p.max)
-    else value = this.getValue(e.clientX, s.mouseStart.x, s.base, p.min, p.max)
+         value = this.getValue(e.clientY, s.mouseStart.y)
+    else value = this.getValue(e.clientX, s.mouseStart.x)
 
     this.handleOnChange(value, e)
   },
