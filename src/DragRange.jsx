@@ -62,7 +62,9 @@ const DragRange = React.createClass({
 
   getValue(client, start, base, min, max) {
     const delta = client - start
-    const val = Math.floor(delta / this.props.unit) * this.props.rate + base
+    const deltaInteger = Math.floor(delta / this.props.unit)
+    const unclampedBase = Math.ceil(base / this.props.rate) * this.props.rate
+    const val = (deltaInteger * this.props.rate) + unclampedBase
     const clamped = this.clamp(min, max, val)
     return Number(clamped.toFixed(this.props.decimals))
   },
