@@ -36,7 +36,6 @@ const DragRange = React.createClass({
       value: 0,
       onChange: () => {},
       // min: 0, max: 100, // for percent
-      default: 0,
       decimals: 2,
       dragStart: () => {},
       dragEnd: () => {},
@@ -60,19 +59,23 @@ const DragRange = React.createClass({
     return value < min ? min : value > max ? max : value
   },
 
-  getValue(client, start) {
-    const p = this.props
+  roundToDecimals(value, decimals) {
+    const pow = Math.pow (10, decimals)
+      return Math.round(value * pow) / pow
+  },
 
+  getValue(client = 0, start = 0) {
+    const p = this.props
     const base = this.state.base
     const unclampedBase = Math.ceil(base / p.rate) * p.rate
 
     const delta = client - start
     const deltaInteger = Math.floor(delta / p.unit)
 
-    const value = (deltaInteger * p.rate) + unclampedBase
-    const clampedValue = this.clamp(p.min, p.max, value)
-
-    return Number(clampedValue.toFixed(p.decimals))
+    let value = (deltaInteger * p.rate) + unclampedBase
+    value = this.clamp(p.min, p.max, value)
+    value = this.roundToDecimals(value, p.decimals)
+    return value
   },
 
   trackDelta(e) {
@@ -102,15 +105,14 @@ const DragRange = React.createClass({
     const target = ReactDOM.findDOMNode(this.props.target || this.refs['target'])
     const rect = target.getBoundingClientRect()
     let percent
-    // todo based on axis
     if (this.props.yAxis) percent = (e.clientY - rect.top) * 100 / rect.height
     else percent = (e.clientX - rect.left) * 100 / rect.width
     percent = Math.floor(percent / this.props.rate) * this.props.rate
     percent = this.clamp(this.props.min, this.props.max, percent)
     if ( ! this.props.disablePercentClamp)
       percent = this.clamp(0, 100, percent)
-    percent = Number(percent.toFixed(this.props.decimals))
 
+    percent = this.roundToDecimals(percent, this.props.decimals)
     this.handleOnChange(percent, e)
   },
 
@@ -118,7 +120,7 @@ const DragRange = React.createClass({
     this.isSettingPercent = false
   },
 
-  handleMouseDown(e) {
+  handleMouseDown(e = {}) {
     if (this.props.percent)
       this.startSetPercent(e)
     else if ( ! this.state.isDragging)
@@ -132,17 +134,20 @@ const DragRange = React.createClass({
   },
 
   handleDoubleClick(e) {
+    const p = this.props
     if (this.firstClick) {
       // reset
-      if ( ! this.props.percent || this.props.enablePercentReset) {
-        this.handleOnChange(this.props.default, e)
-        this.setState(this.getInitialState())
+      if (p.default !== undefined) {
+        if ( ! p.percent || p.enablePercentReset) {
+          this.handleOnChange(this.props.default, e)
+          this.setState(this.getInitialState())
+        }
       }
       e.preventDefault() // prevent text selection
     }
     else {
       this.firstClick = true
-      const timeout = this.props.doubleClickTimeout
+      const timeout = p.doubleClickTimeout
       setTimeout(() => this.firstClick = false, timeout)
     }
   },
@@ -168,6 +173,7 @@ const DragRange = React.createClass({
     this.setState({isDragging: false})
     this.props.dragEnd(e)
   },
+
 
   componentDidMount() {
     document.addEventListener('mousemove', this.handleMouseMove)
