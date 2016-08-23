@@ -24,7 +24,7 @@ const DragRange = React.createClass({
     dragEnd: React.PropTypes.func,
     doubleClickTimeout: React.PropTypes.number,
     disablePercentClamp: React.PropTypes.bool,
-    enablePercentReset: React.PropTypes.bool,
+    disableReset: React.PropTypes.bool,
   },
 
   getDefaultProps() {
@@ -137,8 +137,9 @@ const DragRange = React.createClass({
     const p = this.props
     if (this.firstClick) {
       // reset
-      if (p.default !== undefined) {
-        if ( ! p.percent || p.enablePercentReset) {
+      if (p.default !== undefined && ! p.disableReset) {
+        // for percent set disableReset={false} explicitly
+        if (! p.percent || p.percent && p.disableReset !== undefined) {
           this.handleOnChange(this.props.default, e)
           this.setState(this.getInitialState())
         }
