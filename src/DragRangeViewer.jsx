@@ -6,6 +6,7 @@ const {
 
 const DragRangeModifyEachProp = require('./Examples/DragRangeModifyEachProp.jsx')
 const DragRangeSimplePercent = require('./Examples/DragRangeSimplePercent.jsx')
+const DragRangeCssHighlight = require('./Examples/DragRangeCssHighlight.jsx')
 
 
 const DragRangeViewer = React.createClass({
@@ -18,6 +19,7 @@ const DragRangeViewer = React.createClass({
       <Grid>
         <Row style={rowStyle}><DragRangeModifyEachProp/></Row>
         <Row style={rowStyle}><DragRangeSimplePercent/></Row>
+        <Row style={rowStyle}><DragRangeCssHighlight/></Row>
       </Grid>
     )
   }
