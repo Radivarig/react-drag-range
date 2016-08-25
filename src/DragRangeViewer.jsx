@@ -1,17 +1,23 @@
 const React = require('react')
 
 const {
-  Grid
+  Grid, Row,
 } = require('react-bootstrap')
 
 const DragRangeModifyEachProp = require('./Examples/DragRangeModifyEachProp.jsx')
+const DragRangeSimplePercent = require('./Examples/DragRangeSimplePercent.jsx')
 
 
 const DragRangeViewer = React.createClass({
   render() {
+    const rowStyle = {
+      backgroundColor: '#ddd',
+      textAlign: 'center',
+    }
     return (
       <Grid>
-        <DragRangeModifyEachProp/>
+        <Row style={rowStyle}><DragRangeModifyEachProp/></Row>
+        <Row style={rowStyle}><DragRangeSimplePercent/></Row>
       </Grid>
     )
   }
