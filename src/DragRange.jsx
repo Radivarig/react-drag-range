@@ -42,7 +42,6 @@ const DragRange = React.createClass({
       dragEnd: () => {},
       onDoubleClick: () => {},
       doubleClickTimeout: 500, // 0 for percent
-      getTarget: () => {},
     }
   },
 
@@ -105,7 +104,7 @@ const DragRange = React.createClass({
   handleSetTarget(props) {
     const p = props || this.props
     const s = this.state
-    const target = p.getTarget()
+    const target = p.getTarget && p.getTarget()
     if (s.target != target) {
       if (s.target)
         s.target.removeEventListener('mousedown', this.handleMouseDown)
@@ -234,7 +233,7 @@ const DragRange = React.createClass({
 
   render() {
     const p = this.props
-    const onMouseDown = p.getTarget() ? undefined : this.handleMouseDown
+    const onMouseDown = p.getTarget ? undefined : this.handleMouseDown
 
     return (
       <span ref='container' onMouseDown={onMouseDown}>
