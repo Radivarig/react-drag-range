@@ -109,19 +109,25 @@ const DragRange = React.createClass({
       this.setState({target})
   },
 
-  getTargetRect(recursiveTarget) {
+  getTargetInfo(recursiveTarget) {
     let target = recursiveTarget ||
       ReactDOM.findDOMNode(this.state.target || this.refs['target'])
 
     const rect = target.getBoundingClientRect()
-    const {top, left} = rect
+    const {left, top} = rect
     const width = rect.width || target.clientWidth
     const height = rect.height || target.clientHeight
 
-    if (width && height)
-      return {left, top, width, height}
+    if (width && height) {
+      return {
+        target,
+        rect: {
+          left, top, width, height,
+        }
+      }
+    }
     else if (target.children)
-      return this.getTargetRect(target.children[0])
+      return this.getTargetInfo(target.children[0])
     else return null
   },
 
@@ -132,7 +138,7 @@ const DragRange = React.createClass({
   setPercent(e) {
     if ( ! this.isSettingPercent)
       return
-    const rect = this.getTargetRect()
+    const rect = this.getTargetInfo().rect
 
     let percent
     if (this.props.yAxis) percent = (e.clientY - rect.top) * 100 / rect.height
