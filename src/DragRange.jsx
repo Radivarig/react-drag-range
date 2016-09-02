@@ -102,9 +102,16 @@ const DragRange = React.createClass({
     this.setPercent(e)
   },
 
+  handleSetTarget(props) {
+    const p = props || this.props
+    const target = p.getTarget()
+    if (this.state.target != target)
+      this.setState({target})
+  },
+
   getTargetInfo(recursiveTarget) {
     let target = recursiveTarget ||
-      ReactDOM.findDOMNode(this.props.getTarget() || this.refs['target'])
+      ReactDOM.findDOMNode(this.state.target || this.refs['target'])
 
     const rect = target.getBoundingClientRect()
     const {left, top} = rect
@@ -122,6 +129,10 @@ const DragRange = React.createClass({
     else if (target.children)
       return this.getTargetInfo(target.children[0])
     else return null
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.handleSetTarget(nextProps)
   },
 
   setPercent(e) {
@@ -202,6 +213,8 @@ const DragRange = React.createClass({
   },
 
   componentDidMount() {
+    this.handleSetTarget()
+
     document.addEventListener('mousemove', this.handleMouseMove)
     document.addEventListener('mouseup', this.handleMouseUp)
   },
