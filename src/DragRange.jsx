@@ -104,9 +104,14 @@ const DragRange = React.createClass({
 
   handleSetTarget(props) {
     const p = props || this.props
+    const s = this.state
     const target = p.getTarget()
-    if (this.state.target != target)
+    if (s.target != target) {
+      if (s.target)
+        s.target.removeEventListener('mousedown', this.handleMouseDown)
+      target.addEventListener('mousedown', this.handleMouseDown)
       this.setState({target})
+    }
   },
 
   getTargetInfo(recursiveTarget) {
@@ -156,7 +161,7 @@ const DragRange = React.createClass({
     this.isSettingPercent = false
   },
 
-  handleMouseDown(e = {}) {
+  handleMouseDown(e) {
     if (this.props.percent)
       this.startSetPercent(e)
     else if ( ! this.state.isDragging)
@@ -222,12 +227,18 @@ const DragRange = React.createClass({
   componentWillUnmount() {
     document.removeEventListener('mousemove', this.handleMouseMove)
     document.removeEventListener('mouseup', this.handleMouseUp)
+
+    if (this.state.target)
+      this.state.target.removeEventListener('mousedown', this.handleMouseDown)
   },
 
   render() {
+    const p = this.props
+    const onMouseDown = p.getTarget() ? undefined : this.handleMouseDown
+
     return (
-      <span ref='container' onMouseDown={this.handleMouseDown}>
-        {this.props.children}
+      <span ref='container' onMouseDown={onMouseDown}>
+        {p.children}
       </span>
     )
   }
