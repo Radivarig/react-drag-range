@@ -39,7 +39,7 @@ const DragRangeImage = React.createClass({
         <Row>
         <div style={{padding: 30}}>
           <DragRange percent
-            target={this.refs['target']}
+            getTarget={()=>this.refs.target}
             default={50}
             value={this.state.valueY}
             onChange={(valueY)=> this.setState({valueY})}

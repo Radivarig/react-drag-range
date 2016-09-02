@@ -42,6 +42,7 @@ const DragRange = React.createClass({
       dragEnd: () => {},
       onDoubleClick: () => {},
       doubleClickTimeout: 500, // 0 for percent
+      getTarget: () => {},
     }
   },
 
@@ -101,15 +102,31 @@ const DragRange = React.createClass({
     this.setPercent(e)
   },
 
+  handleSetTarget(props) {
+    const p = props || this.props
+    const target = p.getTarget()
+    if (this.state.target != target)
+      this.setState({target})
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.handleSetTarget(nextProps)
+  },
+
   setPercent(e) {
     if ( ! this.isSettingPercent)
       return
-    const target = ReactDOM.findDOMNode(this.props.target || this.refs['target'])
+    const target = ReactDOM.findDOMNode(this.state.target || this.refs['target'])
     const rect = target.getBoundingClientRect()
+    const {top, left} = rect
+    const width = rect.width || target.clientWidth
+    const height = rect.height || target.clientHeight
     let percent
-    if (this.props.yAxis) percent = (e.clientY - rect.top) * 100 / rect.height
-    else percent = (e.clientX - rect.left) * 100 / rect.width
+
+    if (this.props.yAxis) percent = (e.clientY - top) * 100 / height
+    else percent = (e.clientX - left) * 100 / width
     percent = Math.floor(percent / this.props.rate) * this.props.rate
+
     percent = this.clamp(this.props.min, this.props.max, percent)
     if ( ! this.props.disablePercentClamp)
       percent = this.clamp(0, 100, percent)
@@ -178,8 +195,9 @@ const DragRange = React.createClass({
     this.props.dragEnd(e)
   },
 
-
   componentDidMount() {
+    this.handleSetTarget()
+
     document.addEventListener('mousemove', this.handleMouseMove)
     document.addEventListener('mouseup', this.handleMouseUp)
   },
