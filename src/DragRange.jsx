@@ -111,7 +111,7 @@ const DragRange = React.createClass({
 
   getTargetInfo(recursiveTarget) {
     let target = recursiveTarget ||
-      ReactDOM.findDOMNode(this.state.target || this.refs['target'])
+      ReactDOM.findDOMNode(this.state.target || this.refs['container'])
 
     const rect = target.getBoundingClientRect()
     const {left, top} = rect
@@ -226,7 +226,7 @@ const DragRange = React.createClass({
 
   render() {
     return (
-      <span ref='target' onMouseDown={this.handleMouseDown}>
+      <span ref='container' onMouseDown={this.handleMouseDown}>
         {this.props.children}
       </span>
     )
