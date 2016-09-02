@@ -167,7 +167,7 @@ const DragRange = React.createClass({
   handleMouseDown(e) {
     if (this.props.percent)
       this.startSetPercent(e)
-    else if ( ! this.state.isDragging)
+    if ( ! this.state.isDragging)
       this.setState({startIsDraggingOnMove: true})
     this.handleDoubleClick(e)
     this.props.onMouseDown(e)
