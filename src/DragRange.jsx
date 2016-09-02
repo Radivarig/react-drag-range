@@ -109,6 +109,22 @@ const DragRange = React.createClass({
       this.setState({target})
   },
 
+  getTargetRect(recursiveTarget) {
+    let target = recursiveTarget ||
+      ReactDOM.findDOMNode(this.state.target || this.refs['target'])
+
+    const rect = target.getBoundingClientRect()
+    const {top, left} = rect
+    const width = rect.width || target.clientWidth
+    const height = rect.height || target.clientHeight
+
+    if (width && height)
+      return {left, top, width, height}
+    else if (target.children)
+      return this.getTargetRect(target.children[0])
+    else return null
+  },
+
   componentWillReceiveProps(nextProps) {
     this.handleSetTarget(nextProps)
   },
@@ -116,22 +132,17 @@ const DragRange = React.createClass({
   setPercent(e) {
     if ( ! this.isSettingPercent)
       return
-    const target = ReactDOM.findDOMNode(this.state.target || this.refs['target'])
-    const rect = target.getBoundingClientRect()
-    const {top, left} = rect
-    const width = rect.width || target.clientWidth
-    const height = rect.height || target.clientHeight
+    const rect = this.getTargetRect()
+
     let percent
-
-    if (this.props.yAxis) percent = (e.clientY - top) * 100 / height
-    else percent = (e.clientX - left) * 100 / width
+    if (this.props.yAxis) percent = (e.clientY - rect.top) * 100 / rect.height
+    else percent = (e.clientX - rect.left) * 100 / rect.width
     percent = Math.floor(percent / this.props.rate) * this.props.rate
-
     percent = this.clamp(this.props.min, this.props.max, percent)
     if ( ! this.props.disablePercentClamp)
       percent = this.clamp(0, 100, percent)
-
     percent = this.roundToDecimals(percent, this.props.decimals)
+
     this.handleOnChange(percent, e)
   },
 
