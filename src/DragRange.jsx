@@ -22,6 +22,8 @@ const DragRange = React.createClass({
     decimals: React.PropTypes.number,
     onDragStart: React.PropTypes.func,
     onDragEnd: React.PropTypes.func,
+    onMouseUp: React.PropTypes.func,
+    onMouseDown: React.PropTypes.func,
     onDoubleClick: React.PropTypes.func,
     doubleClickTimeout: React.PropTypes.number,
     disablePercentClamp: React.PropTypes.bool,
@@ -40,6 +42,8 @@ const DragRange = React.createClass({
       decimals: 2,
       onDragStart: () => {},
       onDragEnd: () => {},
+      onMouseUp: () => {},
+      onMouseDown: () => {},
       onDoubleClick: () => {},
       doubleClickTimeout: 500, // 0 for percent
     }
@@ -166,6 +170,7 @@ const DragRange = React.createClass({
     else if ( ! this.state.isDragging)
       this.setState({startIsDraggingOnMove: true})
     this.handleDoubleClick(e)
+    this.props.onMouseDown(e)
   },
 
   handleOnChange(newValue, e) {
@@ -207,6 +212,7 @@ const DragRange = React.createClass({
     this.endSetPercent(e)
     this.setState({startIsDraggingOnMove: false})
     this.endIsDragging(e)
+    this.props.onMouseUp(e)
   },
 
   endIsDragging(e) {
