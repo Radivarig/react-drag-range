@@ -27,8 +27,8 @@ const DragRangeImage = React.createClass({
       borderRadius: '10%',
       border: '3px solid #000',
       backgroundImage: 'radial-gradient(circle at '
-      +this.state.valueY +'% '
-      +this.state.valueX +'%, cyan, blue)',
+      +this.state.valueX +'% '
+      +this.state.valueY +'%, cyan, blue)',
       display: 'block',
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -38,13 +38,15 @@ const DragRangeImage = React.createClass({
       <Grid>
         <Row>
         <div style={{padding: 30}}>
-          <DragRange percent
+          <DragRange
+            percent yAxis
             getTarget={()=>this.refs['target']}
             default={50}
             value={this.state.valueY}
             onChange={(valueY)=> this.setState({valueY})}
           >
-            <DragRange yAxis percent
+            <DragRange
+              percent
               getTarget={()=>this.refs['target']}
               default={50}
               value={this.state.valueX}
