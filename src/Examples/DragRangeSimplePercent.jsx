@@ -1,10 +1,6 @@
 const React = require('react')
 const DragRange = require('../DragRange.jsx')
 
-const {
-  Grid ,Row,
-} = require('react-bootstrap')
-
 const DragRangeViewer = React.createClass({
   getInitialState() {
     return {
@@ -21,8 +17,7 @@ const DragRangeViewer = React.createClass({
 
   render() {
     return (
-      <Grid>
-        <Row>
+      <div>
         This is a&nbsp;
         <DragRange
           percent
@@ -34,8 +29,7 @@ const DragRangeViewer = React.createClass({
           </span>
         </DragRange>
         &nbsp;({this.state.value})
-        </Row>
-      </Grid>
+      </div>
     )
   }
 })

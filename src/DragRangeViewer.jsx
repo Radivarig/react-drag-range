@@ -15,6 +15,7 @@ const DragRangeViewer = React.createClass({
     const rowStyle = {
       backgroundColor: '#ddd',
       textAlign: 'center',
+      margin: 20,
     }
     return (
       <Grid>

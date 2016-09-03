@@ -35,8 +35,7 @@ const DragRangeImage = React.createClass({
     }
 
     return (
-      <Grid>
-        <Row>
+      <div>
         <div style={{padding: 30}}>
           <DragRange
             percent yAxis
@@ -56,9 +55,10 @@ const DragRangeImage = React.createClass({
             </DragRange>
           </DragRange>
         </div>
-          ({this.state.valueY}, {this.state.valueX})
-        </Row>
-      </Grid>
+
+        ({this.state.valueY}%, {this.state.valueX}%)
+
+      </div>
     )
   }
 })

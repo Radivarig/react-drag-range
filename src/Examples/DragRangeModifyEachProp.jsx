@@ -2,7 +2,6 @@ const React = require('react')
 const DragRange = require('../DragRange.jsx')
 
 const {
-  Grid, Row, Col,
   OverlayTrigger, Tooltip,
 } = require('react-bootstrap')
 
@@ -77,42 +76,39 @@ const DragRangeModifyEachProp = React.createClass({
       {name: 'doubleClickTimeout', title: 'Miliseconds for doubleClick detection'}
     ]
 
-    const gridMargin = {margin: 20}
-
     const overlay = (title) => <Tooltip id='tooltip'>{title}</Tooltip> 
 
     return (
       <div>
-        <Grid>
-          <Row style={gridMargin}>
-          {
-            propList.map ((p, i) => {
-              const wrap = (item) => {
-                return (
-                  <OverlayTrigger placement='right' overlay={overlay(item.title)}>
-                    <span>{this.getSimpleDragRangeX(item.name, item.passProps)}</span>
-                  </OverlayTrigger>
-                )
-              }
+        <div>
+        {
+          propList.map ((p, i) => {
+            const wrap = (item) => {
               return (
-                <Row key={i} style={rowStyle}>
-                  {
-                    Array.isArray(p) ?
-                      p.map ((c, j) => <Col key={j}>{wrap(c)}</Col>)
-                    : wrap(p)
-                  }
-                </Row>
-
+                <OverlayTrigger placement='right' overlay={overlay(item.title)}>
+                  <span>{this.getSimpleDragRangeX(item.name, item.passProps)}</span>
+                </OverlayTrigger>
               )
-            })
-          }
-          </Row>
-          <Row style={Object.assign({}, gridMargin, rowStyle)}>
-            This is a&nbsp;
-            {this.getSimpleDragRangeX('value', this.state, 'drag range component')}
-            &nbsp; with above props.
-          </Row>
-        </Grid>
+            }
+            return (
+              <div key={i} style={rowStyle}>
+                {
+                  Array.isArray(p) ?
+                    p.map ((c, j) => <span key={j}>{wrap(c)}&nbsp;</span>)
+                  : wrap(p)
+                }
+              </div>
+
+            )
+          })
+        }
+        </div>
+        <br/>
+        <div style={Object.assign({}, rowStyle)}>
+          This is a&nbsp;
+          {this.getSimpleDragRangeX('value', this.state, 'drag range component')}
+          &nbsp; with above props.
+        </div>
       </div>
     )
   }
