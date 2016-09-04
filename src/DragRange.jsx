@@ -173,15 +173,31 @@ const DragRange = React.createClass({
       this.setState({startIsDraggingOnMove: true})
     this.handleDoubleClick(e)
     this.props.onMouseDown(e)
+
+    // TODO first delta prev values
+    // this.prevValue = this.props.value
+    // this.prevEvent = e
   },
 
   handleOnChange(newValue, e) {
     if (this.props.value !== newValue)
       this.props.onChange(newValue, e)
 
-    const lastValue = this.lastValue || newValue
-    this.props.onDelta(newValue - lastValue, e)
-    this.lastValue = newValue
+    const delta = newValue - this.prevValue
+
+    // TODO first delta prev values
+    if (delta) {
+      const deltaInfo = {
+        value: newValue,
+        prevValue: this.prevValue,
+        event: e,
+        prevEvent: this.prevEvent,
+      }
+      this.props.onDelta(delta, deltaInfo)
+
+      this.prevValue = newValue
+      this.prevEvent = event
+    }
   },
 
   handleDoubleClick(e) {
