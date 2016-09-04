@@ -8,38 +8,40 @@ const DragRangeViewer = React.createClass({
     }
   },
 
-  getHashProgressBar () {
+  render() {
     const chunks = 25
     const integerPart = Math.max(0, Math.floor(this.state.value /100 * chunks))
     let progressBar = new Array(integerPart +1).join('#')
-    progressBar += new Array(chunks -integerPart +1).join('_')
-    const style = {
-      cursor: 'col-resize',
+    progressBar += new Array(chunks -integerPart +1).join('-')
+
+    const shellStyle = {
       fontFamily: 'monospace',
       backgroundColor: '#000',
       color: '#fff',
     }
-    return (
-      <span style={style}>
-        [{progressBar}]
-      </span>
-    )
-  },
 
-  render() {
+    const percentStyle = {
+      textAlign: 'right',
+      display: 'inline-block',
+      width: 35,
+    }
+
     return (
       <div>
-        Char progress bar&nbsp;
-        <DragRange
-          percent
-          value={this.state.value}
-          onChange={(value)=> this.setState({value})}
-        >
-          <span style={{cursor: 'ew-resize'}}>
-            {this.getHashProgressBar()}
-          </span>
+        Shell progress bar&nbsp;
+        <span style={shellStyle}>
+          <DragRange
+            percent
+            value={this.state.value}
+            onChange={(value)=> this.setState({value})}
+          >
+            <span style={{cursor: 'col-resize'}}>
+              [{progressBar}]
+           </span>
         </DragRange>
-        &nbsp; <span style={{display: 'inline-block', width: 30}}> {this.state.value}%</span>
+        <span style={Object.assign({}, percentStyle)}>{this.state.value}%</span>
+        </span>
+        &nbsp;from Linux terminals.
       </div>
     )
   }
