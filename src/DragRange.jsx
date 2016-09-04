@@ -16,6 +16,7 @@ const DragRange = React.createClass({
     rate: React.PropTypes.number,  // how much to change per unit
     value: React.PropTypes.number,
     onChange: React.PropTypes.func,
+    onDelta: React.PropTypes.func,
     min: React.PropTypes.number,
     max: React.PropTypes.number,
     default: React.PropTypes.number,
@@ -38,6 +39,7 @@ const DragRange = React.createClass({
       rate: 1,
       value: 0,
       onChange: () => {},
+      onDelta: () => {},
       // min: 0, max: 100, // for percent
       decimals: 2,
       onDragStart: () => {},
@@ -176,6 +178,10 @@ const DragRange = React.createClass({
   handleOnChange(newValue, e) {
     if (this.props.value !== newValue)
       this.props.onChange(newValue, e)
+
+    const lastValue = this.lastValue || newValue
+    this.props.onDelta(newValue - lastValue, e)
+    this.lastValue = newValue
   },
 
   handleDoubleClick(e) {
