@@ -56,11 +56,12 @@ const DragRangeImage = React.createClass({
       x: normP.x * offset,
       y: normP.y * offset,
     }
+
     // lower inner dot circle movement radius
-    const clampScale = 0.5
+    const clampScale = 0.85
     const normClampedP = {
-      x: normP.x * offset * clampScale,
-      y: normP.y * offset * clampScale,
+      x: offsetP.x * clampScale,
+      y: offsetP.y * clampScale,
     }
 
     const finalP = {
@@ -68,8 +69,14 @@ const DragRangeImage = React.createClass({
       y: (Math.abs(origP.y) < Math.abs(normClampedP.y) ? origP.y : normClampedP.y) + offset,
     }
 
-    const outerBorderWidth = 4
+    // reverse offset and clampScale changes, round to decimals
+    const axisP = {
+      x: this.roundToDecimals((finalP.x - offset) * 2 / clampScale, 2),
+      y: this.roundToDecimals((-finalP.y + offset) * 2 / clampScale, 2),
+    }
 
+
+    const outerBorderWidth = 4
     const imageStyle = {
       width,
       height,
@@ -86,7 +93,7 @@ const DragRangeImage = React.createClass({
     }
 
     const dotStyle = {
-      position: 'relative',
+      position: 'absolute',
       width: 100,
       height: 100,
       left: finalP.x * width -outerBorderWidth,
@@ -95,22 +102,30 @@ const DragRangeImage = React.createClass({
       borderRadius: '50%',
       border: '8px solid dimGrey',
       boxShadow: '0 0 3px 3px #000',
-      backgroundImage: 'radial-gradient(circle at 50% 0%, #333, grey)',
+      backgroundImage: 'radial-gradient(circle at 50% 0%, #333, #999)',
 
 
       // border: '3px solid #000',
       // backgroundImage: 'radial-gradient(circle at 35% 30%, slateGrey, navy)',
-      transform: 'translate(-50%, -50%)',
+
+      transform: 'translate(-50%, -50%) ' +
+      'rotateX(' + axisP.y * 35 +'deg) ' +
+      'rotateY(' + axisP.x * 35 +'deg) ',
+
     }
 
-    const axisP = {
-      x: this.roundToDecimals(normP.x, 2),
-      y: this.roundToDecimals(-normP.y, 2),
+    const perspectiveStyle = {
+      height: '100%',
+      width: '100%',
+      position: 'relative',
+      perspective: 135,
+      perspectiveOrigin: '50% 50%',
     }
+
 
     return (
       <div>
-        <div style={{padding: 30}}>
+        <div>
           <DragRange
             percent yAxis
             disablePercentClamp={true}
@@ -129,11 +144,14 @@ const DragRangeImage = React.createClass({
               onChange={(valueX)=> this.setState({valueX})}
             >
               <div ref='target' style={imageStyle}>
-                <div style={dotStyle}/>
+                <div style={perspectiveStyle}>
+                  <div style={dotStyle}/>
+                </div>
               </div>
             </DragRange>
           </DragRange>
         </div>
+          <br/>
           ({axisP.x}, {axisP.y})
       </div>
     )
