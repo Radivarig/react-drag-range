@@ -38,52 +38,68 @@ const DragRangeImage = React.createClass({
   },
 
   render() {
-    const width = 200
-    const height = 200
+    const width = 150
+    const height = 150
 
-    const borderSize = 2
+    // from percent to [0 to 1] value
+    const offset = 50 / 100
+    const origP = {
+      x: (this.state.valueX / 100 - offset),
+      y: (this.state.valueY / 100 - offset),
+    }
+
+    // normalize will give 0 to 1 value
+    const normP = this.normalize(origP)
+
+    // correct scale change from offset reduction
+    const offsetP = {
+      x: normP.x * offset,
+      y: normP.y * offset,
+    }
+    // lower inner dot circle movement radius
+    const clampScale = 0.5
+    const normClampedP = {
+      x: normP.x * offset * clampScale,
+      y: normP.y * offset * clampScale,
+    }
+
+    const finalP = {
+      x: (Math.abs(origP.x) < Math.abs(normClampedP.x) ? origP.x : normClampedP.x) + offset,
+      y: (Math.abs(origP.y) < Math.abs(normClampedP.y) ? origP.y : normClampedP.y) + offset,
+    }
+
+    const outerBorderWidth = 4
+
     const imageStyle = {
       width,
       height,
+
       borderRadius: '50%',
-      border: borderSize +'px solid #000',
+      border: outerBorderWidth +'px solid dimGrey',
+      boxShadow: '0 0 3px 3px #000',
       backgroundImage: 'radial-gradient(circle at '
-      + this.state.valueX +'% '
-      + this.state.valueY +'%, grey, #333399)',
+      + finalP.x * 100 +'% '
+      + finalP.y * 100 +'%, grey, black)',
       display: 'block',
       marginLeft: 'auto',
       marginRight: 'auto',
     }
 
-    const offset = 50 / 100  // 0 to 1 value
-    const origP = {
-      x: (this.state.valueX / 100 - offset),
-      y: (this.state.valueY / 100 - offset),
-    }
-    // normalize will give 0 to 1 value
-    const normP = this.normalize(origP)
-
-    // divided with 2 because of the 0.5 offset
-    let finalX = Math.abs(origP.x) < Math.abs(normP.x / 2) ? origP.x : normP.x / 2
-    let finalY = Math.abs(origP.y) < Math.abs(normP.y / 2) ? origP.y : normP.y / 2
-
-    finalX += offset
-    finalY += offset
-
-    const finalP = {
-      x: finalX,
-      y: finalY,
-    }
-
     const dotStyle = {
       position: 'relative',
-      width: 30,
-      height: 30,
-      left: finalP.x * width -borderSize,
-      top: finalP.y * height -borderSize,
+      width: 100,
+      height: 100,
+      left: finalP.x * width -outerBorderWidth,
+      top: finalP.y * height -outerBorderWidth,
+
       borderRadius: '50%',
-      border: '1px solid #000',
-      backgroundImage: 'radial-gradient(circle at 50% 50%, cyan, green)',
+      border: '8px solid dimGrey',
+      boxShadow: '0 0 3px 3px #000',
+      backgroundImage: 'radial-gradient(circle at 50% 0%, #333, grey)',
+
+
+      // border: '3px solid #000',
+      // backgroundImage: 'radial-gradient(circle at 35% 30%, slateGrey, navy)',
       transform: 'translate(-50%, -50%)',
     }
 
@@ -97,6 +113,7 @@ const DragRangeImage = React.createClass({
         <div style={{padding: 30}}>
           <DragRange
             percent yAxis
+            disablePercentClamp={true}
             getTarget={()=>this.refs['target']}
             default={50}
             value={this.state.valueY}
@@ -105,6 +122,7 @@ const DragRangeImage = React.createClass({
           >
             <DragRange
               percent
+              disablePercentClamp={true}
               getTarget={()=>this.refs['target']}
               default={50}
               value={this.state.valueX}
