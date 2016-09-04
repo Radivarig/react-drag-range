@@ -10,6 +10,7 @@ const DragRangeHashProgressBar = require('./Examples/DragRangeHashProgressBar.js
 const DragRangeCssHighlight = require('./Examples/DragRangeCssHighlight.jsx')
 const DragRangeAnalogStick = require('./Examples/DragRangeAnalogStick.jsx')
 const DragRangeKnobControl = require('./Examples/DragRangeKnobControl.jsx')
+const DragRangeSliderVertical = require('./Examples/DragRangeSliderVertical.jsx')
 
 
 const DragRangeViewer = React.createClass({
@@ -27,6 +28,7 @@ const DragRangeViewer = React.createClass({
         <Row style={rowStyle}><DragRangeCssHighlight/></Row>
         <Row style={rowStyle}><DragRangeAnalogStick/></Row>
         <Row style={rowStyle}><DragRangeKnobControl/></Row>
+        <Row style={rowStyle}><DragRangeSliderVertical/></Row>
       </Grid>
     )
   }
