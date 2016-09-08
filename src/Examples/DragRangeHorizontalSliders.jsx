@@ -28,8 +28,8 @@ const DragRangeViewer = React.createClass({
       display: 'inline-block',
       border: 'solid black',
       borderWidth,
-      backgroundImage: 'radial-gradient(circle at '
-      + value + '% 50%, #5577dd, black)',
+      backgroundImage: 'radial-gradient(circle at 50%'
+      + value + '%, #5577dd, black)',
       margin: '0px 10px',
     }
 
