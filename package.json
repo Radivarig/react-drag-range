@@ -1,7 +1,7 @@
 {
   "name": "react-drag-range",
   "version": "0.1.0",
-  "description": "React component for click and drag detection on wrapped elements",
+  "description": "React component for click/drag detection on wrapped elements",
   "author": "Reslav Hollos",
   "license": "MIT",
   "main": "./exports.js",
@@ -14,10 +14,13 @@
   },
   "keywords": [
     "react",
-    "reactjs",
     "react-component",
+    "click",
     "drag",
-    "range"
+    "detection",
+    "wrapper",
+    "range",
+    "slider"
   ],
   "dependencies": {
     "babel-loader": "^6.2.5"
