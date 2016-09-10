@@ -1,7 +1,7 @@
 {
   "name": "react-drag-range",
   "version": "0.1.0",
-  "description": "React component wrapper for changing number range values by dragging",
+  "description": "React component for click and drag detection on wrapped elements",
   "author": "Reslav Hollos",
   "license": "MIT",
   "main": "./exports.js",
