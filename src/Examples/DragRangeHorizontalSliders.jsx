@@ -9,7 +9,6 @@ const DragRangeViewer = React.createClass({
     }
     for (var i = 0; i < s.slidersCount; ++i)
       s['value_' +i] = 50
-    console.log (s)
     return s
   },
 
