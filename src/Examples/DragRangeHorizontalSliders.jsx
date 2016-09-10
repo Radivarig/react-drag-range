@@ -48,7 +48,7 @@ const DragRangeViewer = React.createClass({
     const onChange = (value) => {
       const currValue = this.state['value_' + n]
       const delta =  currValue - value
-      s = {isFirstClick: false}
+      let s = {isFirstClick: false}
       const getMultiplier = (distance) => Math.pow (0.3, distance)
 
       if ( ! this.state.isFirstClick) {
