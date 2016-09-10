@@ -1,9 +1,7 @@
 const React = require('react')
 const DragRange = require('../DragRange.jsx')
 
-const {
-  OverlayTrigger, Tooltip,
-} = require('react-bootstrap')
+require('style!css!../tooltip.css')
 
 const DragRangeModifyEachProp = React.createClass({
   getInitialState() {
@@ -76,8 +74,6 @@ const DragRangeModifyEachProp = React.createClass({
       {name: 'doubleClickTimeout', title: 'Miliseconds for doubleClick detection'}
     ]
 
-    const overlay = (title) => <Tooltip id='tooltip'>{title}</Tooltip> 
-
     return (
       <div>
         <div>
@@ -85,9 +81,10 @@ const DragRangeModifyEachProp = React.createClass({
           propList.map ((p, i) => {
             const wrap = (item) => {
               return (
-                <OverlayTrigger placement='right' overlay={overlay(item.title)}>
-                  <span>{this.getSimpleDragRangeX(item.name, item.passProps)}</span>
-                </OverlayTrigger>
+                <div className='tooltip'>
+                  {this.getSimpleDragRangeX(item.name, item.passProps)}
+                  <span className='tooltiptext'>{item.title}</span>
+                </div>
               )
             }
             return (

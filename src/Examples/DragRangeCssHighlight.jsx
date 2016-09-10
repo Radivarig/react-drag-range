@@ -1,10 +1,6 @@
 const React = require('react')
 const DragRange = require('../DragRange.jsx')
 
-const {
-  Grid, Row,
-} = require('react-bootstrap')
-
 const DragRangeImage = React.createClass({
   getInitialState() {
     return {

@@ -1,9 +1,5 @@
 const React = require('react')
 
-const {
-  Grid, Row,
-} = require('react-bootstrap')
-
 const DragRangeModifyEachProp = require('./Examples/DragRangeModifyEachProp.jsx')
 const DragRangeTangleJS = require('./Examples/DragRangeTangleJS.jsx')
 const DragRangeSimplePercent = require('./Examples/DragRangeSimplePercent.jsx')
@@ -17,33 +13,33 @@ const DragRangeHorizontalSliders = require('./Examples/DragRangeHorizontalSlider
 const DragRangeViewer = React.createClass({
   render() {
     const rowStyle = {
-      backgroundColor: '#ddd',
+      backgroundColor: '#eee',
       textAlign: 'center',
       margin: 10,
       padding: 20,
       boxShadow: '0px 5px 10px #888',
     }
     return (
-      <Grid style={{textAlign: 'center'}}>
+      <div style={{textAlign: 'center'}}>
 
         <h1>React Drag Range</h1>
 
-        <Row style={rowStyle}>
+        <div style={rowStyle}>
           Drag Range is a React component that provides detection for click/drag rate changes and callbacks with value/delta/percent changes for both X and Y axis.
-        </Row>
+        </div>
 
         <h1>Examples</h1>
 
-        <Row style={rowStyle}><DragRangeModifyEachProp/></Row>
-        <Row style={rowStyle}><DragRangeTangleJS/></Row>
-        <Row style={rowStyle}><DragRangeSimplePercent/></Row>
-        <Row style={rowStyle}><DragRangeHashProgressBar/></Row>
-        <Row style={rowStyle}><DragRangeCssHighlight/></Row>
-        <Row style={rowStyle}><DragRangeAnalogStick/></Row>
-        <Row style={rowStyle}><DragRangeKnobControl/></Row>
-        <Row style={rowStyle}><DragRangeSliderVertical/></Row>
-        <Row style={rowStyle}><DragRangeHorizontalSliders/></Row>
-      </Grid>
+        <div style={rowStyle}><DragRangeModifyEachProp/></div>
+        <div style={rowStyle}><DragRangeTangleJS/></div>
+        <div style={rowStyle}><DragRangeSimplePercent/></div>
+        <div style={rowStyle}><DragRangeHashProgressBar/></div>
+        <div style={rowStyle}><DragRangeCssHighlight/></div>
+        <div style={rowStyle}><DragRangeAnalogStick/></div>
+        <div style={rowStyle}><DragRangeKnobControl/></div>
+        <div style={rowStyle}><DragRangeSliderVertical/></div>
+        <div style={rowStyle}><DragRangeHorizontalSliders/></div>
+      </div>
     )
   }
 })
