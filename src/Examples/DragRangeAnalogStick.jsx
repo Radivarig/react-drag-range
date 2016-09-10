@@ -96,8 +96,8 @@ const DragRangeImage = React.createClass({
       position: 'absolute',
       width: 100,
       height: 100,
-      left: finalP.x * width -outerBorderWidth,
-      top: finalP.y * height -outerBorderWidth,
+      left: finalP.x * width,
+      top: finalP.y * height,
 
       borderRadius: '50%',
       border: '8px solid dimGrey',
