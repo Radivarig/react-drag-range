@@ -23,7 +23,7 @@
     "slider"
   ],
   "dependencies": {
-    "babel-loader": "^6.2.5"
+    "jsx-loader": "^0.13.2"
   },
   "devDependencies": {
     "css-loader": "^0.25.0",
