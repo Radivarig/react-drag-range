@@ -1,7 +1,7 @@
 const React = require('react')
 const DragRange = require('../DragRange.jsx')
 
-require('../tooltip.css')
+require('style!css!../tooltip.css')
 
 const DragRangeModifyEachProp = React.createClass({
   getInitialState() {
