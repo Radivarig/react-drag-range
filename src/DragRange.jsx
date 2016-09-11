@@ -12,6 +12,8 @@ const DragRange = React.createClass({
   propTypes: {
     yAxis: React.PropTypes.bool,   // default is x
     percent: React.PropTypes.bool, // if value should be x width or y height
+    rotation: React.PropTypes.bool,   // detect rotation
+    centerPercent: React.PropTypes.object,   // rotation center point
     unit: React.PropTypes.number,  // unit in pixels
     rate: React.PropTypes.number,  // how much to change per unit
     value: React.PropTypes.number,
@@ -35,6 +37,8 @@ const DragRange = React.createClass({
     return {
       yAxis: false,
       percent: false,
+      rotation: false,
+      centerPercent: {x: 0.5, y: 0.5},
       unit: 20,
       rate: 1,
       value: 0,
@@ -95,7 +99,31 @@ const DragRange = React.createClass({
     const p = this.props
 
     let value
-    if (p.yAxis)
+
+    if (p.rotation) {
+      const {left, top, width, height} = this.getTargetInfo().rect
+      // TODO  p.centerPoint
+      const p0 = {
+        x: left + p.centerPercent.x * width,
+        y: top + p.centerPercent.y * height,
+      }
+
+      const p1 = {x: s.mouseStart.x, y: s.mouseStart.y}
+      const p2 = {x: e.clientX, y: e.clientY}
+
+      const v1 = {x: p0.x - p1.x, y: p0.y - p1.y}
+      const v2 = {x: p0.x - p2.x, y: p0.y - p2.y}
+
+      const v1DotV2 = v1.x * v2.x + v1.y * v2.y
+      const lenV1 = Math.sqrt(Math.pow(v1.x, 2) + Math.pow(v1.y, 2))
+      const lenV2 = Math.sqrt(Math.pow(v2.x, 2) + Math.pow(v2.y, 2))
+      
+      const signum = p2.x < p0.x ? -1 : 1
+
+      value = signum * Math.acos ( v1DotV2 / (lenV1 * lenV2) ) * 180 / Math.PI
+      console.log(v1DotV2, lenV1, lenV2)
+    }
+    else if (p.yAxis)
          value = this.getValue(e.clientY, s.mouseStart.y)
     else value = this.getValue(e.clientX, s.mouseStart.x)
 

@@ -50,6 +50,7 @@ const DragRangeImage = React.createClass({
       <div>
         <div style={{padding: 30}}>
           <DragRange
+            rotation
             unit={1}
             min={-135}
             max={135}
