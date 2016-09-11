@@ -94,7 +94,7 @@ const DragRangeViewer = React.createClass({
 
     return (
       <span>
-        This is an set of horizontal sliders that corespond to each others movements like an equalizer.
+        A set of horizontal sliders that corespond to each others movements like an equalizer.
         <br/>
         {sliders}
       </span>

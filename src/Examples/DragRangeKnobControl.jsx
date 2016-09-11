@@ -48,6 +48,7 @@ const DragRangeImage = React.createClass({
 
     return (
       <div>
+        Volume knob (rotation angle detection coming in next release)
         <div style={{padding: 30}}>
           <DragRange
             unit={1}

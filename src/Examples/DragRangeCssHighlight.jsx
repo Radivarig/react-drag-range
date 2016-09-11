@@ -32,6 +32,7 @@ const DragRangeImage = React.createClass({
 
     return (
       <div>
+        Detection of both X (width) and Y (height) axis
         <div style={{padding: 30}}>
           <DragRange
             percent yAxis

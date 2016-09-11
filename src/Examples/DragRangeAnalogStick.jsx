@@ -125,7 +125,8 @@ const DragRangeImage = React.createClass({
 
     return (
       <div>
-        <div>
+        Analog game controller stick
+        <div style={{paddingTop: 10}}>
           <DragRange
             percent yAxis
             disablePercentClamp={true}
