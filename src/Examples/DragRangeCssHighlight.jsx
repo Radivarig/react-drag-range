@@ -52,7 +52,7 @@ const DragRangeImage = React.createClass({
           </DragRange>
         </div>
 
-        ({this.state.valueY}%, {this.state.valueX}%)
+        ({this.state.valueX}%, {this.state.valueY}%)
 
       </div>
     )

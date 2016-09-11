@@ -100,7 +100,7 @@ var DragRange = require('react-drag-range')
         </DragRange>
       </div>
 
-      ({this.state.valueY}%, {this.state.valueX}%)
+      ({this.state.valueX}%, {this.state.valueY}%)
 
     </div>
 // ...
