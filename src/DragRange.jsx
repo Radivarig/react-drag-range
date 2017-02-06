@@ -227,7 +227,6 @@ const DragRange = React.createClass({
     if (this.props.percent)
       this.setPercent(e)
     else this.trackDelta(e)
-    window.getSelection().removeAllRanges()
   },
 
   handleMouseUp(e) {
