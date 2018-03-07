@@ -4,25 +4,22 @@ const DragRange = require('../DragRange.jsx')
 require('style-loader!css-loader!../tooltip.css')
 
 class DragRangeModifyEachProp extends React.Component {
-  getInitialState() {
-    return {
-      unit: 20,
-      rate: 1,
-      strict: true,
+  state = {
+    unit: 20,
+    rate: 1,
+    strict: true,
 
-      percentWidth: 0,
-      percentHeight: 0,
+    percentWidth: 0,
+    percentHeight: 0,
 
-      valueX: 0,
-      valueY: 0,
+    valueX: 0,
+    valueY: 0,
 
-      min: undefined,
-      max: undefined,
+    min: undefined,
+    max: undefined,
 
-      decimals: 2,
-      doubleClickTimeout: 500,
-
-    }
+    decimals: 2,
+    doubleClickTimeout: 500,
   }
 
   onChange (name, e) {
