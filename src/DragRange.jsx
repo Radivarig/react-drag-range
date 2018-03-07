@@ -43,10 +43,14 @@ class DragRange extends React.Component {
     doubleClickTimeout: 500, // 0 for percent
   }
 
-  state = {
-    mouseStart: {x: 0, y: 0},
-    base: this.props.default,
+  getInitialState = () => {
+    return Object.assign ({}, {
+      mouseStart: {x: 0, y: 0},
+      base: this.props.default,
+    })
   }
+
+  state = this.getInitialState ()
 
   startIsDragging = (e) => {
     if (this.state.isDragging)
