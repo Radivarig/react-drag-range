@@ -23,7 +23,8 @@
     "slider"
   ],
   "dependencies": {
-    "jsx-loader": "^0.13.2"
+    "jsx-loader": "^0.13.2",
+    "prop-types": "^15.6.1"
   },
   "devDependencies": {
     "css-loader": "^0.25.0",
