@@ -2,13 +2,13 @@ const React = require('react')
 const ReactDOM = require('react-dom')
 const PropTypes = require('prop-types')
 
-const DragRange = React.createClass({
+class DragRange extends React.Component {
   getInitialState() {
     return {
       mouseStart: {x: 0, y: 0},
       base: this.props.default,
     }
-  },
+  }
 
   propTypes: {
     yAxis: PropTypes.bool,   // default is x
@@ -30,7 +30,7 @@ const DragRange = React.createClass({
     doubleClickTimeout: PropTypes.number,
     disablePercentClamp: PropTypes.bool,
     disableReset: PropTypes.bool,
-  },
+  }
 
   getDefaultProps() {
     return {
@@ -50,7 +50,7 @@ const DragRange = React.createClass({
       onDoubleClick: () => {},
       doubleClickTimeout: 500, // 0 for percent
     }
-  },
+  }
 
   startIsDragging(e) {
     if (this.state.isDragging)
@@ -62,16 +62,16 @@ const DragRange = React.createClass({
       base: this.props.value,
     })
     this.props.onDragStart(e)
-  },
+  }
 
   clamp(min, max, value) {
     return value < min ? min : value > max ? max : value
-  },
+  }
 
   roundToDecimals(value, decimals) {
     const pow = Math.pow (10, decimals)
       return Math.round(value * pow) / pow
-  },
+  }
 
   getValue(client = 0, start = 0) {
     const p = this.props
@@ -85,7 +85,7 @@ const DragRange = React.createClass({
     value = this.clamp(p.min, p.max, value)
     value = this.roundToDecimals(value, p.decimals)
     return value
-  },
+  }
 
   trackDelta(e) {
     if ( ! this.state.isDragging)
@@ -101,12 +101,12 @@ const DragRange = React.createClass({
     else value = this.getValue(e.clientX, s.mouseStart.x)
 
     this.handleOnChange(value, e)
-  },
+  }
 
   startSetPercent(e) {
     this.isSettingPercent = true
     this.setPercent(e)
-  },
+  }
 
   handleSetTarget(props) {
     const p = props || this.props
@@ -118,7 +118,7 @@ const DragRange = React.createClass({
       target.addEventListener('mousedown', this.handleMouseDown)
       this.setState({target})
     }
-  },
+  }
 
   getTargetInfo(recursiveTarget) {
     let target = recursiveTarget ||
@@ -140,11 +140,11 @@ const DragRange = React.createClass({
     else if (target.children)
       return this.getTargetInfo(target.children[0])
     else return null
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     this.handleSetTarget(nextProps)
-  },
+  }
 
   setPercent(e) {
     if ( ! this.isSettingPercent)
@@ -161,11 +161,11 @@ const DragRange = React.createClass({
     percent = this.roundToDecimals(percent, this.props.decimals)
 
     this.handleOnChange(percent, e)
-  },
+  }
 
   endSetPercent(e) {
     this.isSettingPercent = false
-  },
+  }
 
   handleMouseDown(e) {
     if (this.props.percent)
@@ -178,7 +178,7 @@ const DragRange = React.createClass({
     // TODO first delta prev values
     // this.prevValue = this.props.value
     // this.prevEvent = e
-  },
+  }
 
   handleOnChange(newValue, e) {
     if (this.props.value !== newValue)
@@ -199,7 +199,7 @@ const DragRange = React.createClass({
       this.prevValue = newValue
       this.prevEvent = event
     }
-  },
+  }
 
   handleDoubleClick(e) {
     const p = this.props
@@ -220,7 +220,7 @@ const DragRange = React.createClass({
       const timeout = p.doubleClickTimeout
       setTimeout(() => this.firstClick = false, timeout)
     }
-  },
+  }
 
   handleMouseMove(e) {
     if (this.state.startIsDraggingOnMove)
@@ -229,28 +229,28 @@ const DragRange = React.createClass({
       this.setPercent(e)
     else this.trackDelta(e)
     window.getSelection().removeAllRanges()
-  },
+  }
 
   handleMouseUp(e) {
     this.endSetPercent(e)
     this.setState({startIsDraggingOnMove: false})
     this.endIsDragging(e)
     this.props.onMouseUp(e)
-  },
+  }
 
   endIsDragging(e) {
     if ( ! this.state.isDragging)
       return
     this.setState({isDragging: false})
     this.props.onDragEnd(e)
-  },
+  }
 
   componentDidMount() {
     this.handleSetTarget()
 
     document.addEventListener('mousemove', this.handleMouseMove)
     document.addEventListener('mouseup', this.handleMouseUp)
-  },
+  }
 
   componentWillUnmount() {
     document.removeEventListener('mousemove', this.handleMouseMove)
@@ -258,7 +258,7 @@ const DragRange = React.createClass({
 
     if (this.state.target)
       this.state.target.removeEventListener('mousedown', this.handleMouseDown)
-  },
+  }
 
   render() {
     const p = this.props
@@ -270,6 +270,6 @@ const DragRange = React.createClass({
       </span>
     )
   }
-})
+}
 
 module.exports = DragRange
