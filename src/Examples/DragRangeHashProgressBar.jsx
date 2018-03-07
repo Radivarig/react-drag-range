@@ -1,7 +1,7 @@
-const React = require('react')
-const DragRange = require('../DragRange.jsx')
+import React from 'react'
+import DragRange from '../DragRange.jsx'
 
-const DragRangeViewer = React.createClass({
+const DragRangeViewer = React.Component({
   getInitialState() {
     return {
       value: 23,
@@ -47,4 +47,4 @@ const DragRangeViewer = React.createClass({
   }
 })
 
-module.exports = DragRangeViewer
+export default DragRangeViewer

@@ -1,7 +1,7 @@
-const React = require('react')
-const DragRange = require('../DragRange.jsx')
+import React from 'react'
+import DragRange from '../DragRange.jsx'
 
-const DragRangeImage = React.createClass({
+const DragRangeImage = React.Component({
   getInitialState() {
     return {
       value: -35,
@@ -75,4 +75,4 @@ const DragRangeImage = React.createClass({
   }
 })
 
-module.exports = DragRangeImage
+export default DragRangeImage

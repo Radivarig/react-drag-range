@@ -1,5 +1,5 @@
-const React = require('react')
-const DragRange = require('../DragRange.jsx')
+import React from 'react'
+import DragRange from '../DragRange.jsx'
 
 require('style-loader!css-loader!../tooltip.css')
 
@@ -22,14 +22,14 @@ class DragRangeModifyEachProp extends React.Component {
     doubleClickTimeout: 500,
   }
 
-  onChange (name, e) {
+  onChange = (name, e) => {
     const value = e && e.target ? e.target.value : e
     let s = {}
     s[name] = value
     this.setState(s)
   }
 
-  getSimpleDragRangeX(name, passProps, text) {
+  getSimpleDragRangeX = (name, passProps, text) => {
     return (
       <DragRange
         value={this.state[name]}
@@ -51,7 +51,7 @@ class DragRangeModifyEachProp extends React.Component {
     )
   }
 
-  render() {
+  render = () => {
     const rowStyle = {
       backgroundColor: '#ddd',
       textAlign: 'center',
@@ -108,4 +108,4 @@ class DragRangeModifyEachProp extends React.Component {
   }
 }
 
-module.exports = DragRangeModifyEachProp
+export default DragRangeModifyEachProp
