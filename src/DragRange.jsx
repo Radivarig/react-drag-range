@@ -48,7 +48,7 @@ class DragRange extends React.Component {
     base: this.props.default,
   }
 
-  startIsDragging(e) {
+  startIsDragging = (e) => {
     if (this.state.isDragging)
       return
     this.setState({
@@ -60,16 +60,16 @@ class DragRange extends React.Component {
     this.props.onDragStart(e)
   }
 
-  clamp(min, max, value) {
+  clamp = (min, max, value) => {
     return value < min ? min : value > max ? max : value
   }
 
-  roundToDecimals(value, decimals) {
+  roundToDecimals = (value, decimals) => {
     const pow = Math.pow (10, decimals)
       return Math.round(value * pow) / pow
   }
 
-  getValue(client = 0, start = 0) {
+  getValue = (client = 0, start = 0) => {
     const p = this.props
     const base = this.state.base
     const unclampedBase = Math.ceil(base / p.rate) * p.rate
@@ -83,7 +83,7 @@ class DragRange extends React.Component {
     return value
   }
 
-  trackDelta(e) {
+  trackDelta = (e) => {
     if ( ! this.state.isDragging)
       return
     window.getSelection().removeAllRanges()
@@ -99,12 +99,12 @@ class DragRange extends React.Component {
     this.handleOnChange(value, e)
   }
 
-  startSetPercent(e) {
+  startSetPercent = (e) => {
     this.isSettingPercent = true
     this.setPercent(e)
   }
 
-  handleSetTarget(props) {
+  handleSetTarget = (props) => {
     const p = props || this.props
     const s = this.state
     const target = p.getTarget && p.getTarget()
@@ -116,7 +116,7 @@ class DragRange extends React.Component {
     }
   }
 
-  getTargetInfo(recursiveTarget) {
+  getTargetInfo = (recursiveTarget) => {
     let target = recursiveTarget ||
       ReactDOM.findDOMNode(this.state.target || this.refs['container'])
 
@@ -138,11 +138,11 @@ class DragRange extends React.Component {
     else return null
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     this.handleSetTarget(nextProps)
   }
 
-  setPercent(e) {
+  setPercent = (e) => {
     if ( ! this.isSettingPercent)
       return
     const rect = this.getTargetInfo().rect
@@ -159,11 +159,11 @@ class DragRange extends React.Component {
     this.handleOnChange(percent, e)
   }
 
-  endSetPercent(e) {
+  endSetPercent = (e) => {
     this.isSettingPercent = false
   }
 
-  handleMouseDown(e) {
+  handleMouseDown = (e) => {
     if (this.props.percent)
       this.startSetPercent(e)
     if ( ! this.state.isDragging)
@@ -176,7 +176,7 @@ class DragRange extends React.Component {
     // this.prevEvent = e
   }
 
-  handleOnChange(newValue, e) {
+  handleOnChange = (newValue, e) => {
     if (this.props.value !== newValue)
       this.props.onChange(newValue, e)
 
@@ -196,8 +196,8 @@ class DragRange extends React.Component {
       this.prevEvent = event
     }
   }
-
-  handleDoubleClick(e) {
+  
+  handleDoubleClick = (e) => {
     const p = this.props
     if (this.firstClick) {
       // reset
@@ -217,8 +217,8 @@ class DragRange extends React.Component {
       setTimeout(() => this.firstClick = false, timeout)
     }
   }
-
-  handleMouseMove(e) {
+  
+  handleMouseMove = (e) => {
     if (this.state.startIsDraggingOnMove)
       this.startIsDragging(e)
     if (this.props.percent)
@@ -226,37 +226,37 @@ class DragRange extends React.Component {
     else this.trackDelta(e)
     window.getSelection().removeAllRanges()
   }
-
-  handleMouseUp(e) {
+  
+  handleMouseUp = (e) => {
     this.endSetPercent(e)
     this.setState({startIsDraggingOnMove: false})
     this.endIsDragging(e)
     this.props.onMouseUp(e)
   }
-
-  endIsDragging(e) {
+  
+  endIsDragging = (e) => {
     if ( ! this.state.isDragging)
       return
     this.setState({isDragging: false})
     this.props.onDragEnd(e)
   }
-
-  componentDidMount() {
+  
+  componentDidMount = () => {
     this.handleSetTarget()
 
     document.addEventListener('mousemove', this.handleMouseMove)
     document.addEventListener('mouseup', this.handleMouseUp)
   }
-
-  componentWillUnmount() {
+  
+  componentWillUnmount = () => {
     document.removeEventListener('mousemove', this.handleMouseMove)
     document.removeEventListener('mouseup', this.handleMouseUp)
 
     if (this.state.target)
       this.state.target.removeEventListener('mousedown', this.handleMouseDown)
   }
-
-  render() {
+  
+  render = () => {
     const p = this.props
     const onMouseDown = p.getTarget ? undefined : this.handleMouseDown
 
