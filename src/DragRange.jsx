@@ -3,14 +3,7 @@ const ReactDOM = require('react-dom')
 const PropTypes = require('prop-types')
 
 class DragRange extends React.Component {
-  getInitialState() {
-    return {
-      mouseStart: {x: 0, y: 0},
-      base: this.props.default,
-    }
-  }
-
-  propTypes: {
+  static propTypes = {
     yAxis: PropTypes.bool,   // default is x
     percent: PropTypes.bool, // if value should be x width or y height
     unit: PropTypes.number,  // unit in pixels
@@ -32,24 +25,27 @@ class DragRange extends React.Component {
     disableReset: PropTypes.bool,
   }
 
-  getDefaultProps() {
-    return {
-      yAxis: false,
-      percent: false,
-      unit: 20,
-      rate: 1,
-      value: 0,
-      onChange: () => {},
-      onDelta: () => {},
-      // min: 0, max: 100, // for percent
-      decimals: 2,
-      onDragStart: () => {},
-      onDragEnd: () => {},
-      onMouseUp: () => {},
-      onMouseDown: () => {},
-      onDoubleClick: () => {},
-      doubleClickTimeout: 500, // 0 for percent
-    }
+  static defaultProps = {
+    yAxis: false,
+    percent: false,
+    unit: 20,
+    rate: 1,
+    value: 0,
+    onChange: () => {},
+    onDelta: () => {},
+    // min: 0, max: 100, // for percent
+    decimals: 2,
+    onDragStart: () => {},
+    onDragEnd: () => {},
+    onMouseUp: () => {},
+    onMouseDown: () => {},
+    onDoubleClick: () => {},
+    doubleClickTimeout: 500, // 0 for percent
+  }
+
+  state = {
+    mouseStart: {x: 0, y: 0},
+    base: this.props.default,
   }
 
   startIsDragging(e) {
