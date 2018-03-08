@@ -1,6 +1,6 @@
-const React = require('react')
-const ReactDOM = require('react-dom')
-const PropTypes = require('prop-types')
+import React from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 class DragRange extends React.Component {
   static propTypes = {
@@ -272,4 +272,4 @@ class DragRange extends React.Component {
   }
 }
 
-module.exports = DragRange
+export default DragRange

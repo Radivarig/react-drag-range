@@ -4,7 +4,7 @@ Try it - [Live Examples](https://radivarig.github.io/#/react-drag-range)
 
 ### Install
 
-`npm install react-drag-range` (peer dependencies: `react react-dom`)
+`npm install --save react-drag-range`
 
 ### Demo
 
@@ -12,7 +12,7 @@ Check out [Live Examples](https://radivarig.github.io/#/react-drag-range) and th
 ```bash
 git clone git@github.com:Radivarig/react-drag-range.git
 npm install
-npm run dev 
+npm start 
 ```
 navigate to `localhost:8080`
 
@@ -34,36 +34,36 @@ You can also help by staring, sharing and reporting issues.
 
 ```javascript
   propTypes: {
-    yAxis: React.PropTypes.bool,   // default is x
-    percent: React.PropTypes.bool, // if value should be x width or y height
-    unit: React.PropTypes.number,  // unit in pixels
-    rate: React.PropTypes.number,  // how much to change per unit
-    value: React.PropTypes.number,
-    onChange: React.PropTypes.func,
-    onDelta: React.PropTypes.func,
-    min: React.PropTypes.number,
-    max: React.PropTypes.number,
-    default: React.PropTypes.number,
-    decimals: React.PropTypes.number,
-    onDragStart: React.PropTypes.func,
-    onDragEnd: React.PropTypes.func,
-    onMouseUp: React.PropTypes.func,
-    onMouseDown: React.PropTypes.func,
-    onDoubleClick: React.PropTypes.func,
-    doubleClickTimeout: React.PropTypes.number,
-    disablePercentClamp: React.PropTypes.bool,
-    disableReset: React.PropTypes.bool,
+    yAxis: PropTypes.bool,   // default is x
+    percent: PropTypes.bool, // if value should be x width or y height
+    unit: PropTypes.number,  // unit in pixels
+    rate: PropTypes.number,  // how much to change per unit
+    value: PropTypes.number,
+    onChange: PropTypes.func,
+    onDelta: PropTypes.func,
+    min: PropTypes.number,
+    max: PropTypes.number,
+    default: PropTypes.number,
+    decimals: PropTypes.number,
+    onDragStart: PropTypes.func,
+    onDragEnd: PropTypes.func,
+    onMouseUp: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onDoubleClick: PropTypes.func,
+    doubleClickTimeout: PropTypes.number,
+    disablePercentClamp: PropTypes.bool,
+    disableReset: PropTypes.bool,
   },
 
 ```
 
 ### Basic Usage
 
-Please take a look at the [example code](https://github.com/Radivarig/react-drag-range/tree/master/src/Examples)
+Please take a look at the [examples](https://github.com/Radivarig/react-drag-range/tree/master/src/Examples)
 
 ```javascript
 // ...
-var DragRange = require('react-drag-range')
+import DragRange from 'react-drag-range'
 
 // ...
 // simple X axis detection
