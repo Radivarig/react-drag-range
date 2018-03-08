@@ -1,16 +1,15 @@
 import React from 'react'
 
-/*
-const DragRangeModifyEachProp = require('./Examples/DragRangeModifyEachProp.jsx')
-const DragRangeTangleJS = require('./Examples/DragRangeTangleJS.jsx')
-const DragRangeSimplePercent = require('./Examples/DragRangeSimplePercent.jsx')
-const DragRangeHashProgressBar = require('./Examples/DragRangeHashProgressBar.jsx')
-const DragRangeCssHighlight = require('./Examples/DragRangeCssHighlight.jsx')
-const DragRangeAnalogStick = require('./Examples/DragRangeAnalogStick.jsx')
-const DragRangeKnobControl = require('./Examples/DragRangeKnobControl.jsx')
-const DragRangeSliderVertical = require('./Examples/DragRangeSliderVertical.jsx')
-const DragRangeHorizontalSliders = require('./Examples/DragRangeHorizontalSliders.jsx')
-*/
+import DragRangeModifyEachProp from './Examples/DragRangeModifyEachProp.jsx'
+import DragRangeTangleJS from './Examples/DragRangeTangleJS.jsx'
+import DragRangeSimplePercent from './Examples/DragRangeSimplePercent.jsx'
+import DragRangeHashProgressBar from './Examples/DragRangeHashProgressBar.jsx'
+import DragRangeCssHighlight from './Examples/DragRangeCssHighlight.jsx'
+import DragRangeAnalogStick from './Examples/DragRangeAnalogStick.jsx'
+import DragRangeKnobControl from './Examples/DragRangeKnobControl.jsx'
+import DragRangeSliderVertical from './Examples/DragRangeSliderVertical.jsx'
+import DragRangeHorizontalSliders from './Examples/DragRangeHorizontalSliders.jsx'
+
 export default (props) => {
   const rowStyle = {
     backgroundColor: '#eee',
@@ -30,10 +29,6 @@ export default (props) => {
 
       <h1>Examples</h1>
 
-    </div>
-  )
-}
-/*
       <div style={rowStyle}><DragRangeModifyEachProp/></div>
       <div style={rowStyle}><DragRangeTangleJS/></div>
       <div style={rowStyle}><DragRangeSimplePercent/></div>
@@ -43,4 +38,7 @@ export default (props) => {
       <div style={rowStyle}><DragRangeKnobControl/></div>
       <div style={rowStyle}><DragRangeSliderVertical/></div>
       <div style={rowStyle}><DragRangeHorizontalSliders/></div>
-*/
+  
+    </div>
+  )
+}

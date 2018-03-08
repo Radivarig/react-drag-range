@@ -1,21 +1,19 @@
 import React from 'react'
 import DragRange from '../DragRange.jsx'
 
-const DragRangeImage = React.Component({
-  getInitialState() {
-    return {
-      value: -35,
-    }
-  },
+class DragRangeImage extends React.Component {
+  state = {
+    value: -35,
+  }
 
-  onChange (name, e) {
+  onChange = (name, e) => {
     const value = e && e.target ? e.target.value : e
     let s = {}
     s[name] = value
     this.setState(s)
-  },
+  }
 
-  render() {
+  render = () => {
     const scale = 100
     const imageStyle = {
       width: scale,
@@ -73,6 +71,6 @@ const DragRangeImage = React.Component({
       </div>
     )
   }
-})
+}
 
 export default DragRangeImage

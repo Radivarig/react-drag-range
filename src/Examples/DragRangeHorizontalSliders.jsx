@@ -1,8 +1,8 @@
 import React from 'react'
 import DragRange from '../DragRange.jsx'
 
-const DragRangeViewer = React.Component({
-  getInitialState() {
+class DragRangeViewer extends React.Component {
+  state = (() => {
     let s = {
       slidersCount: 15,
       isFirstClick: true,
@@ -10,11 +10,11 @@ const DragRangeViewer = React.Component({
     for (var i = 0; i < s.slidersCount; ++i)
       s['value_' +i] = 50
     return s
-  },
+  })()
 
-  lastDelta: 0,
+  lastDelta = 0
 
-  getHorSlider(n) {
+  getHorSlider = (n) => {
     const height = 200
     const borderWidth = 2
 
@@ -84,9 +84,9 @@ const DragRangeViewer = React.Component({
         </DragRange>
       </span>
     )
-  },
+  }
 
-  render() {
+  render = () => {
     let sliders = []
     for (var i = 0; i < this.state.slidersCount; ++i) {
       sliders.push(this.getHorSlider(i))
@@ -100,6 +100,6 @@ const DragRangeViewer = React.Component({
       </span>
     )
   }
-})
+}
 
 export default DragRangeViewer

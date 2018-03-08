@@ -1,43 +1,45 @@
 import React from 'react'
 import DragRange from '../DragRange.jsx'
 
-const DragRangeImage = React.Component({
-  getInitialState() {
-    return {
+class DragRangeImage extends React.Component {
+  getInitialState = () => {
+    return Object.assign ({}, {
       valueX: 50,
       valueY: 50,
-    }
-  },
+    })
+  }
 
-  onChange (name, e) {
+  state = this.getInitialState()
+
+  onChange = (name, e) => {
     const value = e && e.target ? e.target.value : e
     let s = {}
     s[name] = value
     this.setState(s)
-  },
+  }
 
-  resetValues(e) {
+  resetValues = (e) => {
     const initialState = this.getInitialState()
     this.setState({
       valueX: initialState.valueX,
       valueY: initialState.valueY,
     })
-  },
+  }
 
-  normalize(point) {
+  normalize = (point) => {
     const norm = Math.sqrt(point.x * point.x + point.y * point.y) || 1
     return {
       x: point.x / norm,
       y: point.y / norm,
     }
-  },
+  }
 
-  roundToDecimals(value, decimals) {
+  roundToDecimals = (value, decimals) => {
     const p = Math.pow (10, decimals)
     return Math.round(value  * p) / p
-  },
+  }
 
-  render() {
+  render = () => {
     const width = 150
     const height = 150
 
@@ -157,6 +159,6 @@ const DragRangeImage = React.Component({
       </div>
     )
   }
-})
+}
 
 export default DragRangeImage

@@ -1,21 +1,19 @@
 import React from 'react'
 import DragRange from '../DragRange.jsx'
 
-const DragRangeViewer = React.Component({
-  getInitialState() {
-    return {
-      value: 0,
-    }
-  },
+class DragRangeViewer extends React.Component {
+  state = {
+    value: 0,
+  }
 
-  onChange (name, e) {
+  onChange = (name, e) => {
     const value = e && e.target ? e.target.value : e
     let s = {}
     s[name] = value
     this.setState(s)
-  },
+  }
 
-  render() {
+  render = () => {
     return (
       <div>
         This is a&nbsp;
@@ -32,6 +30,6 @@ const DragRangeViewer = React.Component({
       </div>
     )
   }
-})
+}
 
 export default DragRangeViewer

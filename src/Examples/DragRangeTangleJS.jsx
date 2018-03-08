@@ -1,20 +1,18 @@
 import React from 'react'
 import DragRange from '../DragRange.jsx'
 
-const DragRangeViewer = React.Component({
-  getInitialState() {
-    return {
-      value: 3,
-    }
-  },
+class DragRangeViewer extends React.Component {
+  state = {
+    value: 3,
+  }
 
-  setHover(value) {
+  setHover = (value) => {
     return (e) => {
       this.setState({hover: value})
     }
-  },
+  }
 
-  render() {
+  render = () => {
     const tangleStyle = {
       cursor: 'ew-resize',
       borderBottom: '1px dotted',
@@ -55,6 +53,6 @@ const DragRangeViewer = React.Component({
       </div>
     )
   }
-})
+}
 
 export default DragRangeViewer

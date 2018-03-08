@@ -1,14 +1,12 @@
 import React from 'react'
 import DragRange from '../DragRange.jsx'
 
-const DragRangeViewer = React.Component({
-  getInitialState() {
-    return {
-      value: 23,
-    }
-  },
+class DragRangeViewer extends React.Component {
+  state = {
+    value: 23,
+  }
 
-  render() {
+  render = () => {
     const chunks = 25
     const integerPart = Math.max(0, Math.floor(this.state.value /100 * chunks))
     let progressBar = new Array(integerPart +1).join('#')
@@ -45,6 +43,6 @@ const DragRangeViewer = React.Component({
       </div>
     )
   }
-})
+}
 
 export default DragRangeViewer
