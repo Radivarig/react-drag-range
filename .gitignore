@@ -1,5 +1,5 @@
 node_modules/
 npm-debug.log
-index.html
+/index.html
 dist/*
 !dist/main.js
