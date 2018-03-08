@@ -122,7 +122,7 @@ class DragRange extends React.Component {
 
   getTargetInfo = (recursiveTarget) => {
     let target = recursiveTarget ||
-      ReactDOM.findDOMNode(this.state.target || this.refs['container'])
+      ReactDOM.findDOMNode(this.state.target || this.container)
 
     const rect = target.getBoundingClientRect()
     const {left, top} = rect
@@ -265,7 +265,7 @@ class DragRange extends React.Component {
     const onMouseDown = p.getTarget ? undefined : this.handleMouseDown
 
     return (
-      <span ref='container' onMouseDown={onMouseDown}>
+      <span ref={(r) => {this.container = r}} onMouseDown={onMouseDown}>
         {p.children}
       </span>
     )
