@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: "[name].js",
     path: __dirname + "/dist",
-    library: "react-drag-range",
+    library: "reactDragRange",
     libraryTarget: "umd",
   },
 
