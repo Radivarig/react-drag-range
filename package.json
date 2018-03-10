@@ -1,6 +1,6 @@
 {
   "name": "react-drag-range",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "React component for click/drag detection on wrapped elements",
   "author": "Reslav Hollos <reslav.hollos@gmail.com> (http://radivarig.github.io)",
   "license": "MIT",
