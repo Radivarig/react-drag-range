@@ -1,35 +1,33 @@
-import React from 'react'
-import DragRange from '../DragRange.jsx'
+import React from "react"
+import DragRange from "../DragRange.jsx"
 
 class DragRangeViewer extends React.Component {
   state = {
-    value: 0,
+    "value": 0,
   }
 
-  onChange = (name, e) => {
+  onChange = (key, e) => {
     const value = e && e.target ? e.target.value : e
-    let s = {}
-    s[name] = value
-    this.setState(s)
+    const s = {}
+    s[key] = value
+    this.setState (s)
   }
 
-  render = () => {
-    return (
-      <div>
+  render = () => (
+    <div>
         This is a&nbsp;
-        <DragRange
-          percent
-          value={this.state.value}
-          onChange={this.onChange.bind(this, 'value')}
-        >
-          <span style={{cursor: 'ew-resize', borderBottom: '1px dotted #000'}}>
+      <DragRange
+        percent
+        value={this.state.value}
+        onChange={this.onChange.bind (this, "value")}
+      >
+        <span style={{ "cursor": "ew-resize", "borderBottom": "1px dotted #000" }}>
             simple percent component
-          </span>
-        </DragRange>
+        </span>
+      </DragRange>
         &nbsp;({this.state.value})
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default DragRangeViewer

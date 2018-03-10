@@ -27,7 +27,7 @@ module.exports = {
         exclude: [/node_modules/],
         use: {
           loader: "babel-loader",
-        }
+        },
       },
       {
         test: /\.html$/,
@@ -35,8 +35,19 @@ module.exports = {
           {
             loader: "html-loader",
             options: { minimize: true },
-          }
-        ]
+          },
+        ],
+      },
+      {
+        enforce: "pre",
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "eslint-loader",
+            options: { fix: true }
+          },
+        ],
       },
     ],
   },

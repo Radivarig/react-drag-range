@@ -1,23 +1,21 @@
-import React from 'react'
-import DragRange from '../DragRange.jsx'
+import React from "react"
+import DragRange from "../DragRange.jsx"
 
 class DragRangeViewer extends React.Component {
   state = {
-    value: 3,
+    "value": 3,
   }
 
-  setHover = (value) => {
-    return (e) => {
-      this.setState({hover: value})
-    }
+  setHover = (value) => () => {
+    this.setState ({ "hover": value })
   }
 
   render = () => {
     const tangleStyle = {
-      cursor: 'ew-resize',
-      borderBottom: '1px dotted',
-      color: 'royalBlue',
-      position: 'relative',
+      "cursor": "ew-resize",
+      "borderBottom": "1px dotted",
+      "color": "royalBlue",
+      "position": "relative",
     }
 
     // const hoverStyle ={
@@ -27,23 +25,28 @@ class DragRangeViewer extends React.Component {
     //   transform: 'translate(-50%, -50%)',
     // }
     // const hoverText = this.state.hover ? <span style={hoverStyle}>drag</span> : ''
-    const hoverText = ''
- 
+    const hoverText = ""
+
     return (
       <div>
-        This is a drag range component inspired by <a href='http://worrydream.com/Tangle/' target='_blank'>TangleJS</a>.
-        <br/>
+        This is a drag range component inspired by
+        <a
+          href='http://worrydream.com/Tangle/'
+          target='_blank'
+          rel="noopener noreferrer"
+        >TangleJS</a>.
+        <br />
         If you eat &nbsp;
         <DragRange
           value={this.state.value}
-          onChange={(value) => this.setState({value})}
+          onChange={(value) => this.setState ({ value })}
           min={0}
         >
           <span style={tangleStyle}>
             {hoverText}
-            <span ref='hover'
-              onMouseOver={this.setHover(true)}
-              onMouseOut={this.setHover(false)}
+            <span
+              onMouseOver={this.setHover (true)}
+              onMouseOut={this.setHover (false)}
             >
               {this.state.value} cookies
             </span>
