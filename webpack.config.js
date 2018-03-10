@@ -1,16 +1,16 @@
+const path = require('path')
+const packageJson = require(path.resolve(__dirname, "package.json"))
 const HtmlWebPackPlugin = require("html-webpack-plugin")
-const packageJson = require("./package.json")
 
 const mainFile = "DragRange.jsx"
 
 module.exports = {
   entry: {
-    main: __dirname + "/src/" + mainFile,
+    main: path.resolve(__dirname, "src", mainFile),
   },
 
   output: {
     filename: "[name].js",
-    path: __dirname + "/dist",
     library: mainFile.substring (0, mainFile.indexOf(".")),
     libraryTarget: "umd",
   },
@@ -42,8 +42,7 @@ module.exports = {
 
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./index.html",
+      template: path.resolve (__dirname, "src", "index.html"),
     })
   ],
 }
