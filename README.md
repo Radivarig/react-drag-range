@@ -12,7 +12,7 @@ Check out [Live Examples](https://radivarig.github.io/#/react-drag-range) and th
 ```bash
 git clone git@github.com:Radivarig/react-drag-range.git
 npm install
-npm start 
+npm run dev
 ```
 navigate to `localhost:8080`
 
