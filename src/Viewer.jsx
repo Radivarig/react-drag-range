@@ -21,14 +21,6 @@ export default () => {
   return (
     <div style={{ "textAlign": "center" }}>
 
-      <h1>React Drag Range</h1>
-
-      <div style={rowStyle}>
-        Drag Range is a React component that provides detection for click/drag rate changes and callbacks with value/delta/percent changes for both X and Y axis.
-      </div>
-
-      <h1>Examples</h1>
-
       <div style={rowStyle}><DragRangeModifyEachProp /></div>
       <div style={rowStyle}><DragRangeTangleJS /></div>
       <div style={rowStyle}><DragRangeSimplePercent /></div>
