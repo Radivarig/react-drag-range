@@ -16,7 +16,8 @@ class DragRangeViewer extends React.Component {
 
   getHorSlider = (n) => {
     const height = 200
-    const borderWidth = 2
+    const outlineWidth = 2
+    const outline = `${outlineWidth}px solid black`
 
     const value = this.state[`value_${n}`]
 
@@ -25,8 +26,8 @@ class DragRangeViewer extends React.Component {
       "width": "0.7em",
       "cursor": "pointer",
       "display": "inline-block",
-      "border": "solid black",
-      borderWidth,
+      outline,
+      outlineWidth,
       "backgroundImage": `radial-gradient(circle at 50%${
         value}%, #5577dd, black)`,
       "margin": "0px 10px",
@@ -36,10 +37,10 @@ class DragRangeViewer extends React.Component {
       "width": 18,
       "height": 8,
       "cursor": "ns-resize",
-      "border": "solid black",
-      borderWidth,
+      outline,
+      outlineWidth,
       "position": "relative",
-      "top": (value / 100 * height) - borderWidth,
+      "top": (value / 100 * height) - outlineWidth,
       "left": "50%",
       "transform": "translate(-50%, -50%)",
       "backgroundImage": "radial-gradient(circle at 50% 50%, cyan, blue)",

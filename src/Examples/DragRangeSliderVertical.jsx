@@ -8,13 +8,14 @@ class DragRangeViewer extends React.Component {
 
   render = () => {
     const width = 200
-    const borderWidth = 2
+    const outlineWidth = 2
+    const outline = `${outlineWidth}px solid black`
     const sliderStyle = {
       width,
       "height": "0.7em",
       "cursor": "pointer",
       "display": "inline-block",
-      "border": `${borderWidth}px solid black`,
+      outline,
       "backgroundImage": `radial-gradient(circle at ${
         this.state.value}% 50%, #5577dd, black)`,
     }
@@ -23,9 +24,9 @@ class DragRangeViewer extends React.Component {
       "width": 8,
       "cursor": "ew-resize",
       "height": 18,
-      "border": "2px solid black",
+      outline,
       "position": "relative",
-      "left": (this.state.value / 100 * width) - borderWidth,
+      "left": (this.state.value / 100 * width) - outlineWidth,
       "top": "50%",
       "transform": "translate(-50%, -50%)",
       "backgroundImage": "radial-gradient(circle at 50% 50%, cyan, blue)",
