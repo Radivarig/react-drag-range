@@ -16,6 +16,10 @@ class DragRangeViewer extends React.Component {
       "fontFamily": "monospace",
       "backgroundColor": "#000",
       "color": "#fff",
+      "whiteSpace": "nowrap",
+      "display": "inline-block",
+      "marginLeft": 5,
+      "marginRight": 5,
     }
 
     const percentStyle = {
@@ -26,8 +30,8 @@ class DragRangeViewer extends React.Component {
 
     return (
       <div>
-        Shell progress bar&nbsp;
-        <span style={shellStyle}>
+        Shell progress bar
+        <div style={shellStyle}>
           <DragRange
             percent
             value={this.state.value}
@@ -38,8 +42,8 @@ class DragRangeViewer extends React.Component {
             </span>
           </DragRange>
           <span style={Object.assign ({}, percentStyle)}>{this.state.value}%</span>
-        </span>
-        &nbsp;from Linux terminals.
+        </div>
+        from Linux terminals.
       </div>
     )
   }
