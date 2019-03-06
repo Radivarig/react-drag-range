@@ -16,6 +16,8 @@ npm run dev
 ```
 navigate to `localhost:8080`
 
+(To open the demo from a phone, your system has to have port 8080 opened for TCP)
+
 ### Features
 
  - X, Y **axis** **click**/**drag** detection
