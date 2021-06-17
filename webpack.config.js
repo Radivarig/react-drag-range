@@ -1,6 +1,7 @@
 const path = require('path')
 const packageJson = require(path.resolve(__dirname, "package.json"))
 const HtmlWebPackPlugin = require("html-webpack-plugin")
+const ESLintPlugin = require('eslint-webpack-plugin')
 
 const mainFile = "DragRange.jsx"
 
@@ -26,28 +27,8 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: [/node_modules/],
         use: {
-          loader: "babel-loader",
+          loader: "ts-loader",
         },
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader",
-            options: { minimize: true },
-          },
-        ],
-      },
-      {
-        enforce: "pre",
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: "eslint-loader",
-            options: { fix: true }
-          },
-        ],
       },
     ],
   },
@@ -55,6 +36,7 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: path.resolve (__dirname, "src", "index.html"),
-    })
+    }),
+    new ESLintPlugin(),
   ],
 }

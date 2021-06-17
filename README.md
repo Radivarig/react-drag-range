@@ -11,7 +11,12 @@ Try it - [Live Examples](https://radivarig.github.io/#/react-drag-range)
 Check out [Live Examples](https://radivarig.github.io/#/react-drag-range) and the [example code](https://github.com/Radivarig/react-drag-range/tree/master/src/Examples), or run locally
 ```bash
 git clone git@github.com:Radivarig/react-drag-range.git
+cd react-drag-range
 npm install
+# npm install will also call npm run prepare which was setup to install peer deps
+# but npm install <package> will remove them as they are not in (dev)dependencies..
+# so if you instal something additional, call `npm run prepare` again
+npm run prepare
 npm run dev
 ```
 navigate to `localhost:8080`
