@@ -168,6 +168,7 @@ export default class DragRange extends React.Component {
   }
 
   handleMouseDown = (e) => {
+    this.dragInProgress = true
     if (this.props.percent)
       this.startSetPercent (e)
     if (! this.state.isDragging)
@@ -228,14 +229,20 @@ export default class DragRange extends React.Component {
     if (this.props.percent)
       this.setPercent (e)
     else this.trackDelta (e)
-    window.getSelection ().removeAllRanges ()
+
+    if (this.dragInProgress) {
+      window.getSelection ().removeAllRanges ()
+    }
   }
 
   handleMouseUp = (e) => {
     this.endSetPercent (e)
     this.setState ({ "startIsDraggingOnMove": false })
     this.endIsDragging (e)
-    this.props.onMouseUp (e)
+    if (this.dragInProgress) {
+      this.props.onMouseUp (e)
+      this.dragInProgress = false
+    }
   }
 
   endIsDragging = (e) => {
